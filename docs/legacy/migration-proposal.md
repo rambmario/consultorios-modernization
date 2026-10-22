@@ -26,7 +26,7 @@ No se migran datos reales. Seed 100 % ficticio (`Paciente Demo 1`, `ClinicaA`, `
 ### Por qué este MVP
 
 - Es el núcleo clínico que el legado ya tenía (ficha + anamnesis + evoluciones + HC), más lo que la ley y el producto nuevo exigen (login, firmante, auditoría, tenancy) y lo que el dueño pidió crear (agenda).
-- Deja fuera estudios/adjuntos (Fase 2) y recetas (fase posterior): alto costo de archivos y prescripción, bajo valor para la primera demo.
+- Deja fuera cloud (Fase 2), estudios/adjuntos (Fase 3) y recetas (Fase 4): la demo pública en AWS es prioridad de portfolio; estudios y prescripción no bloquean el MVP.
 - Demuestra portfolio: Clean Architecture, React, PostgreSQL, multi-tenant, auditoría de un dato sensible.
 
 ### Fuera de MVP (explícito)
@@ -41,12 +41,12 @@ Pedidos de estudio y resultados, adjuntos, recetas, facturación / liquidación 
 |------|--------|------------|
 | **0** | Análisis | Este repo: análisis, decisiones del dueño, propuesta, ADR 0001 (actual) |
 | **1** | Foundation + MVP clínico | Solución .NET 10 Clean Architecture, EF Core / PostgreSQL, tenancy, Identity/JWT, React (Vite), agenda, ficha, anamnesis, HC con evoluciones firmadas, historial de diagnósticos, auditoría, seed ficticio, CI |
-| **2** | Estudios y adjuntos | Pedidos de estudio, resultados, adjuntos en **S3** con control de acceso (nunca rutas locales) |
-| **3** | Recetas | Prescripciones (fase posterior acordada) |
-| **4** | Cloud AWS | ECS Fargate **o** App Runner, RDS PostgreSQL, S3, SQS — a definir en ADR posterior |
+| **2** | Cloud AWS | Demo pública: ECS Fargate **o** App Runner, RDS PostgreSQL, S3, SQS — a definir en ADR de cloud |
+| **3** | Estudios y adjuntos | Pedidos de estudio, resultados, adjuntos en **S3** con control de acceso (nunca rutas locales) |
+| **4** | Recetas | Prescripciones |
 | **5** | Reportes | Reemplazo de los 3 Crystal (ficha, HC, pedido de estudio) por generación moderna (p. ej. QuestPDF) |
 
-Las fases 2–5 pueden reordenarse; el MVP no se infla.
+El orden de las fases 2–5 prioriza la demo pública en AWS. El MVP (Fase 1) no se infla.
 
 ---
 
@@ -62,7 +62,7 @@ Las fases 2–5 pueden reordenarse; el MVP no se infla.
                ▼                              ▼                              ▼
         Application                    Domain                         Infrastructure
       (casos de uso)              (entidades/reglas)            EF Core, Identity,
-                                                                auditoría, (S3 en Fase 2)
+                                                                auditoría, (S3 en Fase 3)
                                               │
                                               ▼
                                     PostgreSQL (base compartida
@@ -77,8 +77,8 @@ Las fases 2–5 pueden reordenarse; el MVP no se infla.
 | Multi-tenant | Base compartida + `TenantId` + filtro fail-closed (detalle en ADR posterior) |
 | Auth | ASP.NET Identity + JWT; hash de passwords; roles Admin / Profesional / Recepción |
 | Auditoría HC | Registro append-only de vista/alta/edición (quién, qué, cuándo, tenant) |
-| Adjuntos | Fase 2: S3 + URLs firmadas / autorización; **nunca** path local |
-| Cloud | AWS (ECS Fargate o App Runner, RDS PostgreSQL, S3, SQS) — **fase posterior** |
+| Adjuntos | Fase 3: S3 + URLs firmadas / autorización; **nunca** path local |
+| Cloud | AWS (ECS Fargate o App Runner, RDS PostgreSQL, S3, SQS) — **Fase 2** (demo pública) |
 | Reportes | Fuera del MVP; Crystal no se porta |
 
 ### Multi-tenant vs legado
@@ -114,12 +114,12 @@ Nombres en inglés en código; conceptos clínicos en español en docs.
 | `MC`/`AEA`/`APP`/`AF`/`EF`/`AH` | `Anamnesis` (secciones) | Texto largo; interpretación asumida |
 | `EVOLUCION` | `ProgressNote` | Texto largo; **ProfessionalId** + firma (quién, cuándo) |
 | `DIAGNOSTICO` (1 en ficha) | `Diagnosis` + `PatientDiagnosis` | Historial (fecha, profesional, vigencia) |
-| HC calculada (`sp_Generar_HC`) | Vista/proyección de anamnesis + notas + diagnósticos (+ estudios en Fase 2) | Se reimplementa; no se portan SP |
+| HC calculada (`sp_Generar_HC`) | Vista/proyección de anamnesis + notas + diagnósticos (+ estudios en Fase 3) | Se reimplementa; no se portan SP |
 | *(no existe)* | `Appointment` | Agenda desde cero |
 | *(no existe)* | `ClinicalAccessAudit` | Quién vio/modificó HC |
-| `ESTUDIO` / `ANALISIS` / `MOVIMIENTO_ESTUDIO` / `DETALLE_ESTUDIO` | Fase 2 (`StudyOrder`, …) | |
-| `ECODOPLER` (path local) | Fase 2 `Attachment` en S3 | |
-| Recetas | Fase 3 | |
+| `ESTUDIO` / `ANALISIS` / `MOVIMIENTO_ESTUDIO` / `DETALLE_ESTUDIO` | Fase 3 (`StudyOrder`, …) | |
+| `ECODOPLER` (path local) | Fase 3 `Attachment` en S3 | |
+| Recetas | Fase 4 | |
 | Provincia/localidad/calle/barrio | Dirección simple en `Patient` | Sin catálogo de calles en el MVP |
 | Crystal `.rpt` | Fuera de MVP | |
 
@@ -141,8 +141,8 @@ No es asesoramiento legal. Son **restricciones de diseño** del producto.
 
 - Los datos de salud son **sensibles**. Acceso por rol + tenant; seeds ficticios; nada de datos reales en el repo.
 - Minimización: la ficha MVP pide lo necesario para atender (identidad, contacto, OS, anamnesis, diagnósticos), no un padrón extra.
-- Seguridad: TLS, passwords hasheados, secretos fuera del repo, adjuntos (Fase 2) con autorización.
-- Residencia / transferencia al usar AWS: se resuelve en el ADR de cloud (fase posterior), no en este documento.
+- Seguridad: TLS, passwords hasheados, secretos fuera del repo, adjuntos (Fase 3) con autorización.
+- Residencia / transferencia al usar AWS: se resuelve en el ADR de cloud (Fase 2).
 
 ---
 
@@ -156,7 +156,7 @@ No es asesoramiento legal. Son **restricciones de diseño** del producto.
 | Recepción vs HC | Matriz de arriba; test de autorización |
 | Fuga de PII al documentar o sembrar | Reglas de `AGENTS.md` / `registro.mdc`; seed demo evidente |
 | Alcance inflado (estudios, recetas, Crystal) | Roadmap; el MVP no los incluye |
-| Cloud AWS indefinido | No bloquear el MVP; ADR de cloud en Fase 4 |
+| Cloud AWS indefinido | No bloquear el MVP; ADR de cloud en Fase 2 (antes de estudios) |
 
 ---
 
@@ -174,4 +174,4 @@ No es asesoramiento legal. Son **restricciones de diseño** del producto.
 
 ## 8. Próximo paso de implementación
 
-Cuando el dueño dé OK: Fase 1 / foundation (solución .NET 10 + proyectos de test + esqueleto React). Sin código hasta ese OK.
+Fase 1 / Paso 1: solución .NET 10 + proyectos de test.

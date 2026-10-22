@@ -114,3 +114,23 @@ Escribir `migration-proposal.md` + ADR 0001 (stack .NET 10 / React / PostgreSQL 
 ### Tiempo estimado ahorrado
 
 ~1–1.5 h de redacción de propuesta y ADR.
+
+---
+
+## 2026-10-22 — ajuste roadmap AWS
+
+### Pedido principal
+
+Mover Cloud AWS a Fase 2 en propuesta y ADR 0001; nuevo orden 1–5. Luego arrancar Fase 1 Paso 1.
+
+### Qué generó la IA
+
+- Edits de números de fase en `migration-proposal.md` y ADR 0001.
+
+### Qué revisó o debe revisar el desarrollador
+
+- Que el orden coincida con la prioridad de demo pública.
+
+### Tiempo estimado ahorrado
+
+~10 min.

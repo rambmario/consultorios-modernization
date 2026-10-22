@@ -148,3 +148,25 @@ Propuesta de migración y ADR de estrategia, sin código de la app.
 ### Próximo paso
 
 Esperar OK. Siguiente implementación: Fase 1 foundation.
+
+---
+
+## 2026-10-22 — Ajuste de roadmap: AWS en Fase 2
+
+**Hora (aprox.):** 19:57–20:05 (UTC-3, America/Buenos_Aires)
+
+### Objetivo
+
+Mover Cloud AWS a Fase 2 (prioridad de demo pública) y reordenar el resto.
+
+### Qué se hizo
+
+- `docs/legacy/migration-proposal.md` y ADR 0001: orden 1 MVP → 2 Cloud AWS → 3 Estudios/S3 → 4 Recetas → 5 Reportes.
+
+### Decisiones
+
+- AWS antes de estudios porque la demo pública es prioridad de portfolio.
+
+### Próximo paso
+
+Fase 1 / Paso 1: solución .NET 10.

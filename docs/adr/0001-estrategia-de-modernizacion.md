@@ -21,9 +21,9 @@ Adoptar una **reescritura greenfield por slices verticales**:
 1. Documentar el legado (Fase 0) como referencia de solo lectura; no modificarlo.
 2. Levantar el stack moderno (.NET 10 Web API Clean Architecture + React/TypeScript + PostgreSQL) en paralelo.
 3. Entregar primero el **MVP clínico** (login, tenancy, agenda, ficha, anamnesis, HC firmada, diagnósticos, auditoría).
-4. Sumar estudios/adjuntos (S3) en Fase 2 y recetas después.
-5. No portar stored procedures ni Crystal; la HC se reimplementa en dominio.
-6. AWS (ECS Fargate o App Runner, RDS, S3, SQS) se decide en una fase posterior, no bloquea el MVP.
+4. Publicar la **demo en AWS (Fase 2)** — prioridad de portfolio — antes de sumar módulos clínicos extra.
+5. Sumar estudios/adjuntos (S3) en **Fase 3** y recetas en **Fase 4**.
+6. No portar stored procedures ni Crystal; la HC se reimplementa en dominio. El detalle de ECS Fargate vs App Runner se decide en el ADR de cloud de Fase 2.
 
 No se “estrangula” un sistema en producción: no hay datos a convivir ni un servicio legado que seguir llamando.
 
@@ -41,7 +41,7 @@ No se “estrangula” un sistema en producción: no hay datos a convivir ni un 
 
 **Positivas**
 
-- Demo usable al cerrar el MVP, sin esperar Fase 2–3.
+- Demo usable al cerrar el MVP; la publicación en AWS (Fase 2) no espera estudios ni recetas.
 - Dominio nuevo alineado a ley y a multi-tenant, no al EXE monousuario.
 - Menos presión por paridad visual con WinForms.
 
