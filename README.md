@@ -65,4 +65,9 @@ Application source (`src/`, `web/`, tests) will be added after the owner approve
 
 ## Author
 
-Mario — software engineer. Consultorios was originally built at Ingesoft.
+**Mario Ramb** — Senior .NET Full Stack Developer
+
+- LinkedIn: [linkedin.com/in/marioramb](https://www.linkedin.com/in/marioramb)
+- GitHub: [github.com/rambmario](https://github.com/rambmario)
+
+Consultorios was originally built at Ingesoft.

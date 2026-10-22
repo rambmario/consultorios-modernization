@@ -7,6 +7,11 @@ and this project adheres to [Conventional Commits](https://www.conventionalcommi
 
 ## [Unreleased]
 
+### Changed
+
+- Cursor review command lives in `.cursor/commands/revisar-paso.md`, with a clinical-data check and scope tied to `docs/legacy/migration-proposal.md`.
+- README Author section aligned with the public profile (name, LinkedIn, GitHub).
+
 ### Added
 
 - Repository scaffolding: README, CHANGELOG, `.gitignore` (Visual Studio, Node/Vite, `.env`, database files).

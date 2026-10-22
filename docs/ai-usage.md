@@ -25,3 +25,23 @@ Crear el repo `consultorios-modernization` con README, CHANGELOG, `.gitignore`, 
 ### Tiempo estimado ahorrado
 
 ~30–45 min de armado de scaffolding, `.gitignore` y reglas de registro/privacidad.
+
+---
+
+## 2026-10-22 — chore post Paso 1
+
+### Pedido principal
+
+Mover el comando de revisión a `.cursor/commands/`, adaptar la checklist al repo clínico, y alinear la sección Author del README con Pymen.
+
+### Qué generó la IA
+
+- Nuevo `.cursor/commands/revisar-paso.md`, README Author, entradas de registro, commit `chore`.
+
+### Qué revisó o debe revisar el desarrollador
+
+- Que el comando Cursor se dispare desde `.cursor/commands/revisar-paso.md`.
+
+### Tiempo estimado ahorrado
+
+~10 min.

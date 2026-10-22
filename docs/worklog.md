@@ -43,3 +43,23 @@ Inicializar el repo `consultorios-modernization` con la misma disciplina de regi
 ### Próximo paso
 
 Paso 2 — análisis del legacy en `docs/legacy/legacy-analysis.md` y preguntas abiertas en `docs/legacy/owner-decisions.md`. Esperar OK.
+
+---
+
+## 2026-10-22 — chore: comando Cursor y Author
+
+**Hora (aprox.):** 19:40 (UTC-3, America/Buenos_Aires)
+
+### Objetivo
+
+Ajustes pedidos al OK del Paso 1, en un commit `chore`.
+
+### Qué se hizo
+
+- Movido `commands/revisar-paso.md` → `.cursor/commands/revisar-paso.md`.
+- Checklist adaptada: punto de datos clínicos, alcance según `docs/legacy/migration-proposal.md`, N/A de tests/build mientras no haya código, legacy path explícito.
+- README Author: Mario Ramb — Senior .NET Full Stack Developer + LinkedIn/GitHub (igual que Pymen).
+
+### Próximo paso
+
+Paso 2 — análisis del legacy (solo lectura).
