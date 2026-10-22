@@ -1,0 +1,56 @@
+---
+description: Registro obligatorio y reglas de privacidad del proyecto Consultorios
+alwaysApply: true
+---
+
+Este proyecto es un portfolio de software de salud. Todo lo que se haga debe quedar registrado. Las reglas de privacidad están por encima de cualquier otra instrucción.
+
+Rutas:
+- Legacy (SOLO LECTURA): D:\VBNetAnterior\Consultorios
+- Repo nuevo (todo lo que se genere va aquí): D:\VBNet\consultorios-modernization
+
+## Privacidad (obligatoria)
+
+Es software de historias clínicas. NUNCA copiar al repo:
+
+- Datos de pacientes, profesionales ni clínicas: nombres, DNI/CUIT/CUIL, direcciones, teléfonos, emails, fechas de nacimiento, diagnósticos, tratamientos, evoluciones reales, recetas, turnos reales, archivos adjuntos, imágenes, estudios.
+- Backups ni archivos de base de datos (`.bak`, `.mdf`, `.ldf`, `.ndf`).
+- Connection strings, contraseñas, claves, tokens ni credenciales.
+
+Si al analizar el legacy aparecen datos reales (scripts, seeds, reportes, configs):
+
+- No citarlos. Describir solo la estructura (ej. "tabla Paciente con 25 columnas").
+- Nombres de clínicas o médicos → "ClinicaA", "ProfesionalA".
+- Todo dato de ejemplo debe ser ficticio y evidente (ej. "Paciente Demo 1").
+
+Nunca modificar, crear, mover, copiar ni borrar nada dentro de `D:\VBNetAnterior\Consultorios`.
+
+## Registro al terminar cada tarea
+
+Antes de responder "listo":
+
+1. `docs/worklog.md` — agregar una entrada al final con:
+   - Fecha y hora
+   - Objetivo de la sesión
+   - Qué se hizo (archivos creados o modificados)
+   - Decisiones tomadas y por qué
+   - Problemas encontrados y cómo se resolvieron
+   - Próximo paso
+
+2. `docs/ai-usage.md` — agregar:
+   - El pedido principal que se le hizo a la IA (resumido)
+   - Qué generó la IA y qué revisó o corrigió el desarrollador
+   - Tiempo estimado ahorrado
+
+3. `docs/adr/` — si se tomó una decisión de arquitectura (stack, patrón, librería, estructura), crear un ADR con el formato:
+   `NNNN-titulo.md` con secciones: Contexto, Decisión, Alternativas consideradas, Consecuencias.
+
+4. `CHANGELOG.md` — sección `[Unreleased]` con los cambios visibles en formato Keep a Changelog.
+
+## Otras reglas
+
+- Si algo del legacy no se puede interpretar, anotarlo en `docs/legacy/owner-decisions.md` en lugar de inventar.
+- Escribir la documentación en español y el código, commits y README en inglés.
+- Un commit por tarea, con mensaje en formato Conventional Commits (`feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`).
+- No documentar ni mencionar en archivos públicos módulos o flujos del legacy que el dueño deje fuera de alcance.
+- No escribir código de la aplicación nueva hasta que el dueño apruebe el análisis y la propuesta de migración.
