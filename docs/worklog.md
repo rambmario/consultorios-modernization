@@ -63,3 +63,38 @@ Ajustes pedidos al OK del Paso 1, en un commit `chore`.
 ### Próximo paso
 
 Paso 2 — análisis del legacy (solo lectura).
+
+---
+
+## 2026-10-22 — Fase 0 / Paso 2: análisis del legacy
+
+**Hora (aprox.):** 19:40–20:20 (UTC-3, America/Buenos_Aires)
+
+### Objetivo de la sesión
+
+Documentar el sistema legacy Consultorios (solo lectura) y dejar preguntas abiertas para el dueño. Sin código de la app nueva y sin copiar datos clínicos.
+
+### Qué se hizo
+
+**Creados:**
+
+- `docs/legacy/legacy-analysis.md` (stack, métricas, módulos, flujos, modelo, seguridad, riesgos)
+- `docs/legacy/owner-decisions.md` (16 preguntas; ninguna decisión cerrada)
+
+**Analizado (solo lectura):** `D:\VBNetAnterior\Consultorios` — `Consultorios.vbproj` / `.sln`, `frmInicio`, `cls*`, `Conexion`, `Consultas/CREAR_TABLAS.sql`, `Consultas/GENERAR HC.sql`, reportes en `Reporte/`. No se abrieron `.mdf` / `.ldf`.
+
+### Decisiones tomadas y por qué
+
+- Inventariar solo el proyecto compilado clínico; tratar `Gestion_Agro` y leftovers como ruido, sin detallar sus módulos.
+- No adivinar agenda/recetas/facturación: constatar que no existen en código y preguntar al dueño.
+- Describir columnas y FKs, nunca filas ni nombres reales.
+
+### Problemas encontrados y cómo se resolvieron
+
+- Drift de esquema entre el script de creación y las `cls*`: se documentó y se preguntó cuál es la BD real.
+- El árbol incluye otro producto completo y forms agro compilados: se excluyeron de las métricas “clínicas”.
+- Cuerpos de SP casi ausentes: se usó el borrador de `GENERAR HC` y la lista de nombres referenciados.
+
+### Próximo paso
+
+Paso 3 — propuesta de migración + ADR 0001. Esperar OK. No escribir código.

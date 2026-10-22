@@ -14,6 +14,7 @@ and this project adheres to [Conventional Commits](https://www.conventionalcommi
 
 ### Added
 
+- Legacy analysis (`docs/legacy/legacy-analysis.md`) and open owner questions (`docs/legacy/owner-decisions.md`).
 - Repository scaffolding: README, CHANGELOG, `.gitignore` (Visual Studio, Node/Vite, `.env`, database files).
 - Agent guidance (`AGENTS.md`) and Cursor registration rule (`.cursor/rules/registro.mdc`).
 - Session logs: `docs/worklog.md`, `docs/ai-usage.md`, `docs/adr/`.

@@ -42,7 +42,7 @@ Proposed MVP: appointment agenda + patient file + clinical history with progress
 │   ├── adr/                  # Architecture Decision Records
 │   ├── ai-usage.md           # AI assistance log (portfolio transparency)
 │   ├── worklog.md            # Session log
-│   └── legacy/               # Analysis and migration proposal (next steps)
+│   └── legacy/               # Legacy analysis and owner questions
 └── .cursor/rules/            # Persistent project rules
 ```
 
@@ -52,7 +52,7 @@ Application source (`src/`, `web/`, tests) will be added after the owner approve
 
 ## Status
 
-**Phase 0 — discovery.** Repository scaffolding and registration workflow are in place. Legacy analysis and the migration proposal are the next documented steps. No application code yet.
+**Phase 0 — discovery.** Repository scaffolding is in place. Legacy analysis and owner questions are in `docs/legacy/`. Migration proposal is the next documented step. No application code yet.
 
 ---
 

@@ -45,3 +45,30 @@ Mover el comando de revisión a `.cursor/commands/`, adaptar la checklist al rep
 ### Tiempo estimado ahorrado
 
 ~10 min.
+
+---
+
+## 2026-10-22 — Fase 0 / Paso 2
+
+### Pedido principal
+
+Analizar el legacy Consultorios (solo lectura) y producir `docs/legacy/legacy-analysis.md` + `docs/legacy/owner-decisions.md`. Privacidad clínica estricta. Al terminar, correr `/revisar-paso` y esperar OK. Sin código de la app.
+
+### Qué generó la IA
+
+- Inventario de stack, LOC, formularios, reportes y SPs.
+- Flujos de paciente / HC / evolución / estudios.
+- Modelo ER (14 tablas) y huecos de seguridad.
+- 16 preguntas abiertas (sin cerrar ninguna).
+- Exploración asistida del root compilado ([Explore Consultorios core flows](e7921b47-5dd6-452e-a91c-38cbb2619089)), cotejada contra `cls*`, `frmInicio` y scripts de `Consultas/`.
+
+### Qué revisó o debe revisar el desarrollador
+
+- Exactitud de módulos ausentes (agenda, recetas, login) frente al uso real.
+- Significado de las siglas de anamnesis y el drift de esquema.
+- Que ningún dato real haya quedado en los docs.
+- OK para pasar al Paso 3 (propuesta + ADR).
+
+### Tiempo estimado ahorrado
+
+~3–5 h de lectura de formularios, clases de datos y scripts SQL.
