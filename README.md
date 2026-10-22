@@ -36,23 +36,19 @@ Proposed MVP: appointment agenda + patient file + clinical history with progress
 
 ```
 .
-├── AGENTS.md                 # Rules for AI coding agents
+├── Consultorios.sln
+├── src/                      # Domain, Application, Infrastructure, Api
+├── tests/                    # Domain, Application, Api.IntegrationTests
+├── AGENTS.md
 ├── CHANGELOG.md
-├── docs/
-│   ├── adr/                  # Architecture Decision Records
-│   ├── ai-usage.md           # AI assistance log (portfolio transparency)
-│   ├── worklog.md            # Session log
-│   └── legacy/               # Legacy analysis and owner questions
-└── .cursor/rules/            # Persistent project rules
+└── docs/
 ```
-
-Application source (`src/`, `web/`, tests) will be added after the owner approves the Phase 0 analysis.
 
 ---
 
 ## Status
 
-**Phase 0 — discovery (complete).** Legacy analysis, owner decisions, [migration proposal](docs/legacy/migration-proposal.md), and [ADR 0001](docs/adr/0001-estrategia-de-modernizacion.md) are in `docs/`. No application code yet. Next: Phase 1 foundation after owner OK.
+**Phase 1 / Step 1.** .NET 10 Clean Architecture solution is in place (`Consultorios.sln`). Domain, persistence, and UI come in the next steps.
 
 ---
 

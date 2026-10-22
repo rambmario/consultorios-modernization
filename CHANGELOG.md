@@ -17,6 +17,8 @@ and this project adheres to [Conventional Commits](https://www.conventionalcommi
 
 ### Added
 
+- .NET 10 Clean Architecture solution (`Consultorios.sln`, `src/*`, `tests/*`) with CPM, `.editorconfig`, `global.json`.
+- ADR 0002: solution structure.
 - Migration proposal (`docs/legacy/migration-proposal.md`) and ADR 0001 (greenfield vertical slices).
 - Legacy analysis (`docs/legacy/legacy-analysis.md`) and open owner questions (`docs/legacy/owner-decisions.md`).
 - Repository scaffolding: README, CHANGELOG, `.gitignore` (Visual Studio, Node/Vite, `.env`, database files).

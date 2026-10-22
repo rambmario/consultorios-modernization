@@ -20,3 +20,4 @@ Documentación en **español**.
 | ADR | Título | Estado |
 |-----|--------|--------|
 | [0001](0001-estrategia-de-modernizacion.md) | Estrategia de modernización (greenfield por slices) | Aceptado |
+| [0002](0002-estructura-de-solucion.md) | Estructura de la solución (.NET 10 Clean Architecture) | Aceptado |

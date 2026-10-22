@@ -170,3 +170,35 @@ Mover Cloud AWS a Fase 2 (prioridad de demo pública) y reordenar el resto.
 ### Próximo paso
 
 Fase 1 / Paso 1: solución .NET 10.
+
+---
+
+## 2026-10-22 — Fase 1 / Paso 1: solución .NET 10
+
+**Hora (aprox.):** 19:57–20:10 (UTC-3, America/Buenos_Aires)
+
+### Objetivo
+
+Crear la solución Clean Architecture (.NET 10) con proyectos, props compartidos, tests smoke y ADR de estructura.
+
+### Qué se hizo
+
+- `Consultorios.sln` + `src/Consultorios.{Domain,Application,Infrastructure,Api}` + `tests/Consultorios.{Domain.Tests,Application.Tests,Api.IntegrationTests}`.
+- `Directory.Build.props`, `Directory.Packages.props` (CPM), `.editorconfig`, `global.json`, `nuget.config`, `.env.example`.
+- `Entity` (Guid v7), `DomainException`, `ITenantOwned`; `TimeProvider` en Infrastructure; `/health`.
+- ADR 0002.
+- `dotnet build -c Release` 0 warnings; **4 tests passed, 0 failed, 0 skipped**.
+
+### Decisiones
+
+- `.sln` clásico (no `.slnx`).
+- CPM desde el inicio (lección Pymen / Dependabot).
+- NuGet solo nuget.org.
+
+### Problemas
+
+- Ninguno bloqueante.
+
+### Próximo paso
+
+Paso 2 — dominio clínico. Esperar OK.

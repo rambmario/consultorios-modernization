@@ -134,3 +134,23 @@ Mover Cloud AWS a Fase 2 en propuesta y ADR 0001; nuevo orden 1–5. Luego arran
 ### Tiempo estimado ahorrado
 
 ~10 min.
+
+---
+
+## 2026-10-22 — Fase 1 / Paso 1
+
+### Pedido principal
+
+Solución .NET 10 Clean Architecture (proyectos, CPM, editorconfig, tests xUnit + FluentAssertions, ADR 0002). Lecciones de Pymen desde el inicio. Commit, `/revisar-paso`, esperar OK.
+
+### Qué generó la IA
+
+- Scaffold de solución/proyectos, tipos base de dominio, `/health`, ADR 0002, registro.
+
+### Qué revisó o debe revisar el desarrollador
+
+- Layout de capas y el ADR 0002.
+
+### Tiempo estimado ahorrado
+
+~1–1.5 h de armado de solución.
