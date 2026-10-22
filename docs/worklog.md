@@ -122,3 +122,29 @@ Las 16 las aportó Mario; la IA solo documentó y saneó menciones.
 ### Próximo paso
 
 Paso 3 — `migration-proposal.md` + ADR 0001.
+
+---
+
+## 2026-10-22 — Fase 0 / Paso 3: propuesta y ADR 0001
+
+**Hora (aprox.):** 20:05–20:20 (UTC-3, America/Buenos_Aires)
+
+### Objetivo
+
+Propuesta de migración y ADR de estrategia, sin código de la app.
+
+### Qué se hizo
+
+- `docs/legacy/migration-proposal.md`: MVP, fases, stack, mapeo, roles, leyes 26.529 / 25.326 a nivel diseño, criterios de éxito.
+- `docs/adr/0001-estrategia-de-modernizacion.md`: greenfield por slices verticales.
+- README de estado y `docs/adr/README.md` actualizados.
+
+### Decisiones tomadas y por qué
+
+- Greenfield (no strangler clásico): no hay sistema productivo a convivir ni migración de datos.
+- Multi-tenant y roles aunque el legado fuera monousuario: decisión de producto del dueño.
+- Recepción no lee la HC en el MVP (diseño; se puede reabrir).
+
+### Próximo paso
+
+Esperar OK. Siguiente implementación: Fase 1 foundation.

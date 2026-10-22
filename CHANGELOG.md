@@ -16,6 +16,7 @@ and this project adheres to [Conventional Commits](https://www.conventionalcommi
 
 ### Added
 
+- Migration proposal (`docs/legacy/migration-proposal.md`) and ADR 0001 (greenfield vertical slices).
 - Legacy analysis (`docs/legacy/legacy-analysis.md`) and open owner questions (`docs/legacy/owner-decisions.md`).
 - Repository scaffolding: README, CHANGELOG, `.gitignore` (Visual Studio, Node/Vite, `.env`, database files).
 - Agent guidance (`AGENTS.md`) and Cursor registration rule (`.cursor/rules/registro.mdc`).

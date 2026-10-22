@@ -13,4 +13,10 @@ Secciones obligatorias:
 3. **Alternativas consideradas** — qué se descartó y por qué.
 4. **Consecuencias** — efectos positivos, trade-offs y seguimiento.
 
-Documentación en **español**. Todavía no hay ADRs: el primero se escribe en el Paso 3 (propuesta de migración).
+Documentación en **español**.
+
+## Índice
+
+| ADR | Título | Estado |
+|-----|--------|--------|
+| [0001](0001-estrategia-de-modernizacion.md) | Estrategia de modernización (greenfield por slices) | Aceptado |

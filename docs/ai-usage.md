@@ -93,3 +93,24 @@ Pasar las 16 respuestas a decisiones cerradas, sanitizar el análisis (no nombra
 ### Tiempo estimado ahorrado
 
 ~20–30 min de redacción cruzada.
+
+---
+
+## 2026-10-22 — Fase 0 / Paso 3
+
+### Pedido principal
+
+Escribir `migration-proposal.md` + ADR 0001 (stack .NET 10 / React / PostgreSQL / AWS a definir; multi-tenant; MVP clínico + agenda + auditoría; Fase 2 estudios/S3; recetas después). Correr `/revisar-paso` y esperar OK. Sin código.
+
+### Qué generó la IA
+
+- Propuesta de migración, ADR 0001, índice de ADRs, registro y commit.
+
+### Qué revisó o debe revisar el desarrollador
+
+- Matriz de roles (Recepción sin HC) y la estrategia greenfield vs strangler.
+- OK para arrancar foundation.
+
+### Tiempo estimado ahorrado
+
+~1–1.5 h de redacción de propuesta y ADR.

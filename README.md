@@ -52,7 +52,7 @@ Application source (`src/`, `web/`, tests) will be added after the owner approve
 
 ## Status
 
-**Phase 0 — discovery.** Repository scaffolding is in place. Legacy analysis and owner questions are in `docs/legacy/`. Migration proposal is the next documented step. No application code yet.
+**Phase 0 — discovery (complete).** Legacy analysis, owner decisions, [migration proposal](docs/legacy/migration-proposal.md), and [ADR 0001](docs/adr/0001-estrategia-de-modernizacion.md) are in `docs/`. No application code yet. Next: Phase 1 foundation after owner OK.
 
 ---
 
