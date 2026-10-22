@@ -1,56 +1,99 @@
 # Decisiones del dueño del sistema (Mario)
 
 **Fecha:** 2026-10-22  
-**Contexto:** Preguntas abiertas del análisis legacy (Fase 0 / Paso 2).  
-**Regla:** no adivinar. Cada ítem se cierra solo con confirmación explícita del dueño.
+**Contexto:** Cierre de las preguntas abiertas del análisis legacy (Fase 0 / Paso 2).  
+**Fuente:** confirmación explícita del dueño del sistema.
 
 ---
 
 ## Decisiones cerradas
 
-(Ninguna todavía. Se completan cuando Mario responda.)
+Cerradas el **2026-10-22**.
+
+### 1. Una sola clínica
+
+Se usó en **una sola clínica**. El legado es monoclínica y monousuario. El producto nuevo, por decisión de producto, será **multi-tenant por consultorio/clínica** (ver propuesta de migración).
+
+### 2. Un solo profesional
+
+Lo usaba **un solo médico (cardiólogo)**. No había recepción ni otros usuarios.
+
+### 3. Login
+
+Hubo login en una **versión que no está en este árbol**. El producto nuevo tiene **login obligatorio**.
+
+### 4. Agenda
+
+No había agenda en el sistema. El producto nuevo **crea la agenda de turnos desde cero** y **entra en el MVP**.
+
+### 5. Recetas
+
+**Fase posterior**, fuera del MVP.
+
+### 6. Obra social
+
+Alcanza con **nombre de la obra social + número de afiliado**. Sin facturación ni liquidación.
+
+### 7. Estudios y adjuntos
+
+Pedidos de estudio, resultados y ecodoppler: **Fase 2**. Los adjuntos pasan a **almacenamiento de objetos (S3)** con control de acceso; **nunca rutas locales**.
+
+### 8. Diagnósticos
+
+**Historial de diagnósticos** por paciente (no un único diagnóstico actual).
+
+### 9. Siglas de anamnesis
+
+El dueño confirma que son **siglas médicas** (el sistema lo usaba un cardiólogo). **Interpretación asumida, marcada como tal:**
+
+| Sigla | Interpretación asumida |
+|-------|------------------------|
+| MC | Motivo de consulta |
+| AEA | Antecedentes de la enfermedad actual |
+| APP | Antecedentes personales patológicos |
+| AF | Antecedentes familiares |
+| EF | Examen físico |
+| AH | Antecedentes de hábitos (tabaquismo, alcohol, actividad física) |
+
+Se migran como **secciones estructuradas** de la anamnesis, con **texto largo**.
+
+### 10. Esquema de referencia
+
+El de las clases `cls*` (**paciente con 21 columnas**), no el de `Consultas/CREAR_TABLAS.sql`.
+
+### 11. Stored procedures / HC
+
+No hay backup de esquema utilizable. La historia clínica se **reimplementa** a partir de este análisis.
+
+### 12. Longitud de textos
+
+Evoluciones y textos de anamnesis: **texto largo** (sin el tope de 200 caracteres).
+
+### 13. Datos
+
+**No se migran datos reales**: solo el comportamiento, con seed **100 % ficticio**.
+
+### 14. Firma del profesional
+
+**Profesional firmante obligatorio** en cada evolución desde el día uno.
+
+### 15. Copias ajenas en la carpeta legacy
+
+Las **copias de otros sistemas en la carpeta** se descartan por completo: no se analizan, no se migran y **no se nombran** en los documentos públicos.
+
+### 16. Archivos de base y certificados
+
+Los `.mdf`, `.ldf` y `.pfx` del legacy se **ignoran** y **nunca se copian**.
 
 ---
 
 ## Preguntas abiertas
 
-### Uso real
-
-1. ¿Consultorios se usó en **una sola clínica** o hubo varias instalaciones (cada una con su SQL local)?
-2. ¿Lo usaba **un solo profesional**, varios, y/o recepción? ¿Alguien más (administración)?
-3. ¿Hubo **login** en alguna versión que no está en este árbol, o el EXE siempre se abrió sin usuario?
-
-### Agenda, recetas, facturación
-
-4. En el código **no hay agenda/turnos**. ¿Se manejaban en papel, Excel u otro sistema? ¿El producto nuevo debe **crear la agenda desde cero**?
-5. En el código **no hay recetas**. ¿Se hacían a mano / Word / otro medio? ¿Van en el producto nuevo y en qué fase?
-6. La **obra social** en legacy es un dato de ficha (nombre + nro. de afiliado), sin liquidación. ¿En el producto nuevo alcanza con eso, o se espera facturación / coseguro / presentación a OS? ¿En qué fase?
-
-### Alcance clínico del legado vs MVP
-
-7. ¿Los **pedidos de estudio**, resultados y el adjunto **ecodoppler** (`.doc` por path) entran en el MVP, en una fase posterior, o se descartan?
-8. El catálogo de **diagnósticos** y el diagnóstico único en la ficha: ¿se mantiene “un diagnóstico actual”, o se quiere historial de diagnósticos?
-9. Las siglas de anamnesis en la ficha (`MC`, `AEA`, `APP`, `AF`, `EF`, `AH`) aparecen en la UI solo como abreviaturas. ¿Cuál es el significado clínico de cada una? ¿Se migran como campos fijos o como notas libres de HC?
-
-### Datos y esquema
-
-10. Hay **drift** entre `Consultas/CREAR_TABLAS.sql` (paciente con 17 columnas; ecodoppler sin `archivo`) y las `cls*` (paciente con 21; ecodoppler con `archivo`). ¿Cuál es el esquema de la base que realmente se usó?
-11. Los cuerpos de la mayoría de los **stored procedures** no están en el árbol (salvo el borrador de `GENERAR HC`). ¿Hay un backup de esquema (sin datos de pacientes) que se pueda usar después, o se reimplementa la HC a partir de este análisis?
-12. `EVOLUCION.evolucion` está limitado a **200 caracteres**. ¿Eso fue un problema en el uso real? ¿En el nuevo sistema la evolución debe ser texto largo / con formato?
-
-### Legal y retención
-
-13. ¿Hay obligación concreta de **conservar** las HC del legado (plazos Ley 26.529) y, si sí, en qué soporte? ¿Se planea migrar datos (anonimizados / con consentimiento) o solo el comportamiento?
-14. ¿Se necesita **firma / identificación del profesional** en cada evolución desde el día uno (la ley lo pide; el legado no lo tiene)?
-
-### Ruido del árbol
-
-15. ¿`Gestion_Agro` y los forms de sueldos/subalmacenes compilados en `Consultorios.vbproj` se **descartan por completo** (no se analizan más, no se migran)?
-16. Los `.mdf` / `.ldf` y el `.pfx` que están en el folder legacy: ¿son copias de desarrollo y se ignoran? (Este repo **nunca** los va a copiar.)
+Ninguna de las 16 originales. Quedan solo definiciones de diseño para fases posteriores (detalle de UX de agenda, matriz fina de permisos de Recepción sobre la ficha, etc.), a resolver cuando corresponda, sin reabrir lo de arriba.
 
 ---
 
 ## Impacto en documentos
 
-- `legacy-analysis.md`: inventario y huecos del Paso 2.
-- La propuesta de migración (Paso 3) no debe cerrar estas preguntas por su cuenta.
+- `legacy-analysis.md`: alineado a estas decisiones; menciones a copias ajenas reemplazadas por la fórmula acordada.
+- `migration-proposal.md` y ADR 0001 (Paso 3): parten de este cierre.

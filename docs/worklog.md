@@ -85,16 +85,40 @@ Documentar el sistema legacy Consultorios (solo lectura) y dejar preguntas abier
 
 ### Decisiones tomadas y por qué
 
-- Inventariar solo el proyecto compilado clínico; tratar `Gestion_Agro` y leftovers como ruido, sin detallar sus módulos.
+- Inventariar solo el proyecto compilado clínico; las copias de otros sistemas en la carpeta quedan fuera de alcance, sin detallarlas.
 - No adivinar agenda/recetas/facturación: constatar que no existen en código y preguntar al dueño.
 - Describir columnas y FKs, nunca filas ni nombres reales.
 
 ### Problemas encontrados y cómo se resolvieron
 
 - Drift de esquema entre el script de creación y las `cls*`: se documentó y se preguntó cuál es la BD real.
-- El árbol incluye otro producto completo y forms agro compilados: se excluyeron de las métricas “clínicas”.
+- El árbol incluye copias de otros sistemas en la carpeta, fuera de alcance: se excluyeron de las métricas clínicas.
 - Cuerpos de SP casi ausentes: se usó el borrador de `GENERAR HC` y la lista de nombres referenciados.
 
 ### Próximo paso
 
 Paso 3 — propuesta de migración + ADR 0001. Esperar OK. No escribir código.
+
+---
+
+## 2026-10-22 — Fase 0 / Paso 2b: decisiones del dueño
+
+**Hora (aprox.):** 19:51–20:05 (UTC-3, America/Buenos_Aires)
+
+### Objetivo
+
+Registrar las 16 respuestas del dueño, sanitizar documentos públicos y dejar el análisis alineado.
+
+### Qué se hizo
+
+- `docs/legacy/owner-decisions.md`: 16 decisiones cerradas (2026-10-22); preguntas originales vaciadas.
+- `docs/legacy/legacy-analysis.md`: esquema `cls*`, anamnesis con interpretación asumida, login histórico, copias de otros sistemas en la carpeta fuera de alcance (sin nombrarlas).
+- `docs/ai-usage.md`: quitado el link a un id interno de chat.
+
+### Decisiones tomadas y por qué
+
+Las 16 las aportó Mario; la IA solo documentó y saneó menciones.
+
+### Próximo paso
+
+Paso 3 — `migration-proposal.md` + ADR 0001.

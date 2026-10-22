@@ -60,7 +60,7 @@ Analizar el legacy Consultorios (solo lectura) y producir `docs/legacy/legacy-an
 - Flujos de paciente / HC / evolución / estudios.
 - Modelo ER (14 tablas) y huecos de seguridad.
 - 16 preguntas abiertas (sin cerrar ninguna).
-- Exploración asistida del root compilado ([Explore Consultorios core flows](e7921b47-5dd6-452e-a91c-38cbb2619089)), cotejada contra `cls*`, `frmInicio` y scripts de `Consultas/`.
+- Exploración asistida del root compilado, cotejada contra `cls*`, `frmInicio` y scripts de `Consultas/`.
 
 ### Qué revisó o debe revisar el desarrollador
 
@@ -72,3 +72,24 @@ Analizar el legacy Consultorios (solo lectura) y producir `docs/legacy/legacy-an
 ### Tiempo estimado ahorrado
 
 ~3–5 h de lectura de formularios, clases de datos y scripts SQL.
+
+---
+
+## 2026-10-22 — decisiones del dueño
+
+### Pedido principal
+
+Pasar las 16 respuestas a decisiones cerradas, sanitizar el análisis (no nombrar copias ajenas), quitar el link interno de chat en `ai-usage.md`, y luego seguir con el Paso 3 en un commit aparte.
+
+### Qué generó la IA
+
+- Actualización de `owner-decisions.md` y alineación de `legacy-analysis.md` / worklog / CHANGELOG.
+- Eliminación del id interno de chat.
+
+### Qué revisó o corrigió el desarrollador
+
+- El contenido de las 16 decisiones lo aportó Mario.
+
+### Tiempo estimado ahorrado
+
+~20–30 min de redacción cruzada.

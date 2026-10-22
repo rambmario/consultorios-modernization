@@ -17,9 +17,9 @@
 | Base de datos | **SQL Server Express** local; catálogo `Maestro_consultorio` (el typed DataSet usa el nombre `Maestro_Consultorio`) |
 | Acceso a datos | `System.Data.SqlClient` + clases `cls*` (el tipo se llama sin prefijo: `Paciente`, `Evolucion`, …). Insert/delete y listados vía stored procedures; update vía `SqlCommandBuilder`; algunos `SELECT` concatenados |
 | Reportes | **Crystal Reports** 13.0.2000.0 (3 `.rpt`) + **ReportViewer** 8 (`Report1.rdlc`, no usado por el flujo principal) |
-| Autenticación de app | **Ninguna.** Quien ejecuta el EXE y llega a SQL con Windows Integrated ve todos los pacientes |
-| Multi-clínica / profesional | **No existe.** Una base local, sin entidad de consultorio ni de profesional |
-| Agenda / turnos | **No existe** en este árbol |
+| Autenticación de app | **Ninguna en este árbol.** Quien ejecuta el EXE y llega a SQL con Windows Integrated ve todos los pacientes. El dueño confirma login en una versión no presente aquí |
+| Multi-clínica / profesional | **No existe.** Una base local, sin entidad de consultorio ni de profesional. Uso real: una clínica, un cardiólogo |
+| Agenda / turnos | **No existe** en este árbol (el producto nuevo la crea desde cero) |
 | Recetas | **No existen** |
 | Facturación | **No existe** en la app clínica (obra social es un dato de ficha) |
 
@@ -40,7 +40,7 @@ Complejidad según volumen de formularios y acoplamiento. El menú real es el da
 
 | Módulo | Propósito | Formularios principales | Tablas | Complejidad | En home |
 |--------|-----------|-------------------------|--------|-------------|---------|
-| **Pacientes** | ABM de ficha + anamnesis | `frmAbmPaciente`, `frmDetallePaciente` | `PACIENTE` (21 columnas en código; 17 en script de creación) | Media | Sí |
+| **Pacientes** | ABM de ficha + anamnesis | `frmAbmPaciente`, `frmDetallePaciente` | `PACIENTE` (**21 columnas** en `clsPaciente`, esquema de referencia) | Media | Sí |
 | **Historia clínica** | Línea de tiempo **calculada** (no es una tabla) | `frmAbmHistoriaClinica` | `sp_Generar_HC` une evoluciones + estudios + análisis + ecodoppler | Media | Sí |
 | **Evoluciones** | Notas de evolución por paciente | `frmAbmEvolucion`, `frmDetalleEvolucion` | `EVOLUCION` (4 columnas) | Baja | No (se abre desde paciente) |
 | **Estudios** | Pedido de estudio + resultados | `frmAbmMovimiento_Estudio`, `frmAbmMovimiento_estudio_directo`, `frmDetalleMovimiento_Estudio`, `frmAbmDetalle_estudio`, `frmDetalleDetalle_estudio` | `MOVIMIENTO_ESTUDIO`, `DETALLE_ESTUDIO` | Media–Alta | Sí (pedidos globales) |
@@ -50,7 +50,7 @@ Complejidad según volumen de formularios y acoplamiento. El menú real es el da
 | **Ecodoppler** | Adjunta un `.doc` local (guarda `path` / `archivo`) | `frmAbmEcodopler`, `frmDetalleEcodopler` | `ECODOPLER` | Baja | No (desde paciente) |
 | **Geografía** | Provincia / localidad / calle / barrio | `frmAbmLocalidad`, `frmAbmCalle`, `frmAbmBarrio` + detalles | `PROVINCIAS`, `LOCALIDAD`, `CALLES`, `BARRIO` | Baja | No (desde ficha) |
 | **Reportes** | Crystal viewer | `Frmreporte` | Datasets armados en memoria | Baja | No (imprimir desde ficha / HC / pedido) |
-| **Consulta genérica** | Grilla reutilizable | `frmConsulta` | `odtConsultaGeneral` | Baja (y con restos de otro sistema) | No |
+| **Consulta genérica** | Grilla reutilizable | `frmConsulta` | `odtConsultaGeneral` | Baja | No |
 
 ### Ausentes (buscados y no hallados en el proyecto compilado)
 
@@ -60,15 +60,15 @@ Complejidad según volumen de formularios y acoplamiento. El menú real es el da
 - Entidad profesional / usuario / rol / login.
 - Auditoría de quién vio o modificó la historia clínica.
 
-### Ruido en el árbol (no es Consultorios)
+### Fuera de alcance en la carpeta
 
-El directorio legacy **también contiene** una copia de otro producto (`Gestion_Agro`, ~360 `.vb` / ~125k LOC) y forms de sueldos / subalmacenes **compilados** en `Consultorios.vbproj` pero **no alcanzables** desde `frmInicio`. Carpetas `Backup`, `old`, `Archivos de copia de seguridad de Crystal Reports`, `bin`, `obj`. Eso no forma parte del producto clínico. No se detalla.
+Hay **copias de otros sistemas en la carpeta, fuera de alcance**, más backups, `bin` y `obj`. No se analizan, no se migran y no se nombran. Las métricas de este documento ignoran ese material.
 
 ---
 
 ## c. Modelo de datos
 
-Esquema inferido de `cls*` y confirmado con `Consultas/CREAR_TABLAS.sql` (script de recreación, sin datos reales). Hay **drift**: el código de `Paciente` y `Ecodopler` tiene columnas que el script no crea.
+**Esquema de referencia (dueño):** el de las clases `cls*`. `Consultas/CREAR_TABLAS.sql` se usó solo como apoyo de FKs; donde hay drift, gana el código (`Paciente` 21 columnas; `Ecodopler` incluye `archivo`).
 
 **14 tablas clínicas.** No hay tabla `HistoriaClinica`: la HC es un `UNION` temporal.
 
@@ -89,7 +89,7 @@ Esquema inferido de `cls*` y confirmado con `Consultas/CREAR_TABLAS.sql` (script
 | `CALLES` | `id_calle` | **2** | — (sin FK a localidad) |
 | `BARRIO` | `id_barrio` | **2** | — (sin FK a localidad) |
 
-La anamnesis (`MC`, `AEA`, `APP`, `AF`, `EF`, `AH`) vive **en la fila del paciente**, no como documentos de HC. Las etiquetas de UI son solo las siglas (`M - C :`, `A - E - A :`, …). El significado clínico exacto queda en preguntas abiertas.
+La anamnesis (`MC`, `AEA`, `APP`, `AF`, `EF`, `AH`) vive **en la fila del paciente**, no como documentos de HC. Las etiquetas de UI son solo las siglas. **Interpretación asumida** (dueño, 2026-10-22): MC = motivo de consulta; AEA = antecedentes de la enfermedad actual; APP = antecedentes personales patológicos; AF = antecedentes familiares; EF = examen físico; AH = antecedentes de hábitos. En el producto nuevo serán secciones estructuradas de texto largo.
 
 ### Diagrama ER
 
@@ -212,7 +212,7 @@ Catálogo + un FK en la ficha + `afiliado_os`. No hay liquidación, coseguro ni 
 
 | Tema | Estado |
 |------|--------|
-| Login de aplicación | No hay. `AuthenticationMode = 0` (Windows) es la identidad del host VB, no un usuario clínico |
+| Login de aplicación | No hay en este árbol. `AuthenticationMode = 0` (Windows) es la identidad del host VB. El dueño confirma login en otra versión no presente |
 | Contraseñas | No hay tabla ni hash de usuarios en el proyecto compilado. SQL usa **Trusted_Connection / Integrated Security** (cuenta de Windows del operador) |
 | Roles / permisos | No hay. Todos los botones del dashboard están habilitados |
 | Tenant / clínica | No hay |
@@ -228,23 +228,21 @@ Cualquier persona con el EXE y un Windows que autentique contra esa instancia lo
 
 ## f. Tamaño
 
-Medido sobre el **root compilado** (sin `Gestion_Agro`, `Backup`, `bin`, `obj`).
+Medido sobre el código clínico del root compilado (sin copias de otros sistemas en la carpeta, fuera de alcance, ni backups / `bin` / `obj`).
 
 | Métrica | Valor |
 |---------|-------|
-| Archivos `.vb` en root | 90 |
+| Archivos `.vb` clínicos en root | 90 (incluye ruido compilado no alcanzable desde `frmInicio`) |
 | LOC root (líneas no vacías aprox.) | ~18.3k |
-| LOC clínico (sin leftovers compilados ni DataSet generado) | ~13.8k |
-| LOC leftovers compilados (sueldos, subalmacenes, `PRUEBA`, DataSet) | ~4.6k |
-| Formularios compilados (`SubType=Form`) | 34 (incluye 4 leftovers + `PRUEBA`) |
-| Formularios clínicos alcanzables | ~29 |
+| LOC clínico usable | ~13.8k |
+| Formularios compilados (`SubType=Form`) | 34 (de ellos ~29 alcanzables en el flujo clínico) |
 | Clases `cls*` clínicas | 14 |
 | Reportes Crystal | 3 (`Detalle_Paciente.rpt`, `Historia_Clinica.rpt`, `Pedido_Estudio.rpt`) |
 | RDLC | 1 (`Report1.rdlc`) |
 | Stored procedures `sp_*` referenciados | ~80 |
-| Tablas del script de creación | 14 |
+| Tablas clínicas | 14 |
 
-El árbol completo es mucho más grande por `Gestion_Agro` y backups: **no cuenta** como tamaño del producto a modernizar.
+El resto del árbol (copias de otros sistemas en la carpeta, fuera de alcance, y backups) **no cuenta**.
 
 ---
 
@@ -254,12 +252,12 @@ El árbol completo es mucho más grande por `Gestion_Agro` y backups: **no cuent
 2. **Sin profesional firmante.** La evolución y la HC no registran quién las escribió. La 26.529 exige identificación del profesional interviniente.
 3. **Anamnesis denormalizada y tope de 200 caracteres** en evolución y en los textos `MC`/`AEA`/… Poco realista para una HC usable.
 4. **HC calculada en SQL** (`##TEMPORAL`) con cuerpo apenas versionado. Difícil de testear y de migrar 1:1 sin la BD real.
-5. **Drift de esquema** entre `CREAR_TABLAS.sql` y las `cls*` (columnas extra en paciente y ecodoppler). No se inspeccionó el `.mdf`.
+5. **Drift de esquema** entre `CREAR_TABLAS.sql` y las `cls*`. El dueño fija como referencia las `cls*`. No se inspeccionó el `.mdf`.
 6. **SQL concatenado** + `SqlCommandBuilder` + estado global (`Bandera*`, `oPaciente` singleton). Carreras si se abrieran dos fichas; hoy es single-user de hecho.
 7. **.NET 2.0 + Crystal 13 + WinForms.** Sin camino de upgrade in-place razonable.
 8. **Archivos de base (`.mdf` / `.ldf`) y `.pfx` dentro del árbol legacy.** Riesgo de copiar PII o claves si alguien hace un zip del folder. Este repo no los toca.
 9. **Script `Consultas/BORRAR TODAS LAS TABLAS.sql`.** Destructivo; convive con el código.
-10. **Contaminación con otro producto** (`Gestion_Agro`, forms de sueldo/subalmacén, tooltips que dicen “empleado”, `frmConsulta` con labels agro). Confunde el inventario.
+10. **Copias de otros sistemas en la carpeta, fuera de alcance.** Confunden el inventario si no se ignoran.
 11. **Adjuntos por path local.** Si se mueve el PC, los `.doc` se rompen; no hay control de malware ni de acceso.
 12. **Calle y barrio sin FK a localidad.** Combos independientes; datos sucios posibles.
 13. **Un diagnóstico y una OS por paciente.** No hay historial de cobertura ni de diagnósticos.
@@ -269,7 +267,7 @@ El árbol completo es mucho más grande por `Gestion_Agro` y backups: **no cuent
 
 ## h. Preguntas abiertas
 
-Van a `docs/legacy/owner-decisions.md`. No se adivina comportamiento de negocio ni alcance de migración.
+Las 16 del Paso 2 están **cerradas** en `docs/legacy/owner-decisions.md` (2026-10-22).
 
 ---
 

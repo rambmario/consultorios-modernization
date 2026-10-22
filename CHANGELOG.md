@@ -9,6 +9,8 @@ and this project adheres to [Conventional Commits](https://www.conventionalcommi
 
 ### Changed
 
+- Owner decisions for Phase 0 recorded; open questions from the analysis closed (2026-10-22).
+- Legacy analysis aligned to those decisions; copies of other systems in the legacy folder are out of scope and unnamed in public docs.
 - Cursor review command lives in `.cursor/commands/revisar-paso.md`, with a clinical-data check and scope tied to `docs/legacy/migration-proposal.md`.
 - README Author section aligned with the public profile (name, LinkedIn, GitHub).
 
