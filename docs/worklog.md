@@ -225,6 +225,10 @@ Implementar el dominio clínico con las reglas pedidas y tests unitarios.
 - Un diagnóstico no puede estar vigente dos veces a la vez; se puede reabrir en una fila nueva después de `Close`.
 - Auditoría: solo factory `Record`, sin métodos de instancia públicos.
 
+### Problemas encontrados y cómo se resolvieron
+
+- `.gitignore` tiene `coverage/` (reportes de tests). En Windows ignoró `Domain/Coverage`. Se movió a `HealthPlans/` y se commitea aparte.
+
 ### Próximo paso
 
 Paso 3 — persistencia EF Core + PostgreSQL. Esperar OK.
