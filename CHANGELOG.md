@@ -7,6 +7,10 @@ and this project adheres to [Conventional Commits](https://www.conventionalcommi
 
 ## [Unreleased]
 
+### Fixed
+
+- Health-plan types live in `HealthPlans/` so Windows gitignore `coverage/` does not drop them.
+
 ### Changed
 
 - Roadmap: Cloud AWS is now Phase 2 (public demo) before studies/attachments, prescriptions, and reports.
