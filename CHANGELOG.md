@@ -23,6 +23,10 @@ and this project adheres to [Conventional Commits](https://www.conventionalcommi
 
 ### Added
 
+- EF Core + PostgreSQL persistence: fail-closed tenant filter, Restrict FKs, `InitialCreate` plus GiST exclusion constraint on overlapping appointments (`btree_gist`).
+- docker-compose PostgreSQL 16, fictitious `ClinicaA`/`ClinicaB` seed, `/health` vs `/health/ready`.
+- Testcontainers isolation, owned-address round-trip, and parallel overlap tests (0 skipped).
+- ADR 0003 (fail-closed tenancy) and ADR 0004 (PostgreSQL + exclusion constraint).
 - Clinical domain (tenant, patient, coverage, anamnesis, signed progress notes, diagnosis history, appointments, append-only audit) with unit tests.
 - .NET 10 Clean Architecture solution (`Consultorios.sln`, `src/*`, `tests/*`) with CPM, `.editorconfig`, `global.json`.
 - ADR 0002: solution structure.

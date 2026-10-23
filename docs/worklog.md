@@ -257,3 +257,37 @@ Ajustes pedidos al OK del Paso 2, antes de persistencia.
 ### Próximo paso
 
 Paso 3 — persistencia EF Core + PostgreSQL, exclusion constraint de turnos, Testcontainers.
+
+---
+
+## 2026-10-22 — Fase 1 / Paso 3: persistencia
+
+**Hora (aprox.):** 21:45–22:00 (UTC-3, America/Buenos_Aires)
+
+### Objetivo
+
+Persistencia EF Core + PostgreSQL, filtro fail-closed, exclusion de turnos y tests con Testcontainers.
+
+### Qué se hizo
+
+- `ConsultoriosDbContext` + Fluent API; FKs `Restrict`; filtro `ITenantOwned` fail-closed.
+- `IConsultoriosDbContext` / `ITenantContext` en Application; `AmbientTenantContext`.
+- Migración `InitialCreate` + `btree_gist` + `EX_Appointments_ProfessionalOverlap`.
+- `docker-compose` Postgres 16; `DemoDataSeeder` ficticio; `/health` y `/health/ready`.
+- Tests: aislamiento de tenant, round-trip de `Address`, solape paralelo (23P01) y reuso de hueco cancelado.
+- ADR 0003 y ADR 0004.
+
+### Decisiones
+
+- Exclusion en SQL (EF no modela `EXCLUDE`); `WHERE Status IN (0, 1)`.
+- Testcontainers sin skip: si no hay Docker, el test falla.
+- `ProfessionalId` queda como Guid opaco hasta Identity (Paso 4).
+
+### Problemas
+
+- `PostgreSqlBuilder()` parameterless está obsolete (warning-as-error). Se usa el ctor con imagen.
+- Las migraciones de EF usan namespace en bloque: `.editorconfig` silencia `IDE0161` en esa carpeta.
+
+### Próximo paso
+
+`/revisar-paso` y esperar OK. Paso 4 — API + Identity/JWT.

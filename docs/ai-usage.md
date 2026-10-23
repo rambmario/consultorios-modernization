@@ -194,3 +194,24 @@ Al OK del Paso 2: solo el firmante anula/corrige; extraer `Guard`; luego Paso 3.
 ### Tiempo estimado ahorrado
 
 ~20–30 min de refactor y tests.
+
+---
+
+## 2026-10-22 — Fase 1 / Paso 3
+
+### Pedido principal
+
+Paso 3 de persistencia + exclusion constraint PostgreSQL + integration test paralelo con Testcontainers documentado en ADR 0004 (después del fix de dominio).
+
+### Qué generó la IA
+
+- DbContext, configs, migración, seed, docker-compose, tests de aislamiento/exclusion, ADR 0003 y 0004.
+
+### Qué revisó o debe revisar el desarrollador
+
+- SQL de la exclusion y que el test paralelo deje una sola fila.
+- Que el seed sea 100 % ficticio y no haya secretos fuera de `.env`.
+
+### Tiempo estimado ahorrado
+
+~3–4 h de armado EF/Npgsql, migración y Testcontainers.

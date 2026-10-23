@@ -48,7 +48,17 @@ Proposed MVP: appointment agenda + patient file + clinical history with progress
 
 ## Status
 
-**Phase 1 / Step 2.** Domain model and unit tests are in place. Persistence (EF Core / PostgreSQL) is next.
+**Phase 1 / Step 3.** EF Core + PostgreSQL persistence, fail-closed tenant filter, and a GiST exclusion constraint on overlapping appointments.
+
+## Local PostgreSQL
+
+1. Copy `.env.example` to `.env` and set `POSTGRES_PASSWORD`.
+2. `docker compose up -d postgres`
+3. Run the API in Development: it migrates and seeds fictitious `ClinicaA` / `ClinicaB` data.
+
+Liveness: `GET /health`. Readiness (database): `GET /health/ready`.
+
+Integration tests use Testcontainers (Docker required; no skipped tests).
 
 ---
 
