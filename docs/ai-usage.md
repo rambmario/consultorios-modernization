@@ -174,3 +174,23 @@ Dominio clínico + tests de evolución firmada no editable, sin solape de turnos
 ### Tiempo estimado ahorrado
 
 ~2–3 h de modelado y tests de máquina de estados.
+
+---
+
+## 2026-10-22 — fix(domain) pre Paso 3
+
+### Pedido principal
+
+Al OK del Paso 2: solo el firmante anula/corrige; extraer `Guard`; luego Paso 3.
+
+### Qué generó la IA
+
+- `Guard`, firma única en `ProgressNote`, test de otro profesional, refactor de `EnsureTenant`.
+
+### Qué revisó o debe revisar el desarrollador
+
+- Mensaje y regla de `EnsureSigner` alineados al producto (sin anulación cruzada).
+
+### Tiempo estimado ahorrado
+
+~20–30 min de refactor y tests.

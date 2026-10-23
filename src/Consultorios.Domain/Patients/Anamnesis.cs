@@ -20,7 +20,7 @@ public sealed class Anamnesis : Entity, ITenantOwned
 
     public static Anamnesis CreateEmpty(Guid tenantId, Guid patientId, TimeProvider time)
     {
-        Patient.EnsureTenant(tenantId);
+        Guard.AgainstEmptyTenant(tenantId);
         ArgumentNullException.ThrowIfNull(time);
         EnsurePatient(patientId);
 

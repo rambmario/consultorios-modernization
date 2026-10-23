@@ -9,10 +9,12 @@ and this project adheres to [Conventional Commits](https://www.conventionalcommi
 
 ### Fixed
 
+- Only the signing professional can cancel or correct a progress note; another professional gets `DomainException`.
 - Health-plan types live in `HealthPlans/` so Windows gitignore `coverage/` does not drop them.
 
 ### Changed
 
+- Tenant and required-id checks live in `Domain/Common/Guard` (used by all tenant-owned entities).
 - Roadmap: Cloud AWS is now Phase 2 (public demo) before studies/attachments, prescriptions, and reports.
 - Owner decisions for Phase 0 recorded; open questions from the analysis closed (2026-10-22).
 - Legacy analysis aligned to those decisions; copies of other systems in the legacy folder are out of scope and unnamed in public docs.

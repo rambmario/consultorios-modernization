@@ -1,5 +1,4 @@
 using Consultorios.Domain.Common;
-using Consultorios.Domain.Patients;
 
 namespace Consultorios.Domain.Clinical;
 
@@ -26,23 +25,11 @@ public sealed class ClinicalAccessAudit : Entity, ITenantOwned
         Guid resourceId,
         TimeProvider time)
     {
-        Patient.EnsureTenant(tenantId);
+        Guard.AgainstEmptyTenant(tenantId);
         ArgumentNullException.ThrowIfNull(time);
-
-        if (actorUserId == Guid.Empty)
-        {
-            throw new DomainException("ActorUserId is required.");
-        }
-
-        if (patientId == Guid.Empty)
-        {
-            throw new DomainException("PatientId is required.");
-        }
-
-        if (resourceId == Guid.Empty)
-        {
-            throw new DomainException("ResourceId is required.");
-        }
+        Guard.AgainstEmpty(actorUserId, "ActorUserId");
+        Guard.AgainstEmpty(patientId, "PatientId");
+        Guard.AgainstEmpty(resourceId, "ResourceId");
 
         if (string.IsNullOrWhiteSpace(resourceType))
         {

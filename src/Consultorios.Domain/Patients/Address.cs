@@ -2,12 +2,16 @@ namespace Consultorios.Domain.Patients;
 
 public sealed class Address
 {
-    public string? Street { get; }
-    public string? Number { get; }
-    public string? Apartment { get; }
-    public string? City { get; }
-    public string? Province { get; }
-    public string? PostalCode { get; }
+    public string? Street { get; private set; }
+    public string? Number { get; private set; }
+    public string? Apartment { get; private set; }
+    public string? City { get; private set; }
+    public string? Province { get; private set; }
+    public string? PostalCode { get; private set; }
+
+    private Address()
+    {
+    }
 
     public Address(
         string? street,

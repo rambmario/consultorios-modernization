@@ -232,3 +232,28 @@ Implementar el dominio clínico con las reglas pedidas y tests unitarios.
 ### Próximo paso
 
 Paso 3 — persistencia EF Core + PostgreSQL. Esperar OK.
+
+---
+
+## 2026-10-22 — fix(domain): firmante y Guard
+
+**Hora (aprox.):** 21:40 (UTC-3, America/Buenos_Aires)
+
+### Objetivo
+
+Ajustes pedidos al OK del Paso 2, antes de persistencia.
+
+### Qué se hizo
+
+- `ProgressNote.Cancel` / `Correct` solo el profesional que firmó; otro → `DomainException`. Test `Another_professional_cannot_cancel_or_correct`.
+- `Patient.EnsureTenant` movido a `Domain/Common/Guard` (`AgainstEmpty` / `AgainstEmptyTenant`); todas las entidades `ITenantOwned` lo usan.
+- `Address`: ctor privado + setters privados para EF.
+- Dominio: **33 passed, 0 failed, 0 skipped**.
+
+### Decisiones
+
+- El firmante queda atado a `ProfessionalId` de la nota; no hay rol “supervisor” que anule en el MVP.
+
+### Próximo paso
+
+Paso 3 — persistencia EF Core + PostgreSQL, exclusion constraint de turnos, Testcontainers.

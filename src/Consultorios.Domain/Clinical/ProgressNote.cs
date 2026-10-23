@@ -1,5 +1,4 @@
 using Consultorios.Domain.Common;
-using Consultorios.Domain.Patients;
 
 namespace Consultorios.Domain.Clinical;
 
@@ -32,10 +31,10 @@ public sealed class ProgressNote : Entity, ITenantOwned
         TimeProvider time,
         Guid? correctsNoteId = null)
     {
-        Patient.EnsureTenant(tenantId);
+        Guard.AgainstEmptyTenant(tenantId);
         ArgumentNullException.ThrowIfNull(time);
-        EnsureId(patientId, "PatientId");
-        EnsureId(professionalId, "ProfessionalId");
+        Guard.AgainstEmpty(patientId, "PatientId");
+        Guard.AgainstEmpty(professionalId, "ProfessionalId");
 
         if (string.IsNullOrWhiteSpace(body))
         {
@@ -57,8 +56,9 @@ public sealed class ProgressNote : Entity, ITenantOwned
     public void Cancel(Guid professionalId, string reason, TimeProvider time)
     {
         ArgumentNullException.ThrowIfNull(time);
-        EnsureId(professionalId, "ProfessionalId");
+        Guard.AgainstEmpty(professionalId, "ProfessionalId");
         EnsureActive();
+        EnsureSigner(professionalId);
 
         if (string.IsNullOrWhiteSpace(reason))
         {
@@ -74,8 +74,9 @@ public sealed class ProgressNote : Entity, ITenantOwned
     public ProgressNote Correct(Guid professionalId, string newBody, TimeProvider time)
     {
         ArgumentNullException.ThrowIfNull(time);
-        EnsureId(professionalId, "ProfessionalId");
+        Guard.AgainstEmpty(professionalId, "ProfessionalId");
         EnsureActive();
+        EnsureSigner(professionalId);
 
         if (string.IsNullOrWhiteSpace(newBody))
         {
@@ -97,11 +98,11 @@ public sealed class ProgressNote : Entity, ITenantOwned
         }
     }
 
-    private static void EnsureId(Guid id, string name)
+    private void EnsureSigner(Guid professionalId)
     {
-        if (id == Guid.Empty)
+        if (professionalId != ProfessionalId)
         {
-            throw new DomainException($"{name} is required.");
+            throw new DomainException("Only the signing professional can cancel or correct a progress note.");
         }
     }
 }

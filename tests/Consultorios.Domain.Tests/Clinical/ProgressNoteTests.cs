@@ -92,6 +92,25 @@ public class ProgressNoteTests
     }
 
     [Fact]
+    public void Another_professional_cannot_cancel_or_correct()
+    {
+        var tenant = DomainFixtures.ClinicA();
+        var patient = DomainFixtures.DemoPatient(tenant.Id);
+        var other = Guid.CreateVersion7();
+        var note = ProgressNote.Sign(tenant.Id, patient.Id, ProfessionalA, "Texto firmado", DomainFixtures.Time);
+
+        var cancel = () => note.Cancel(other, "No es mia", DomainFixtures.Time);
+        var correct = () => note.Correct(other, "Texto ajeno", DomainFixtures.Time);
+
+        cancel.Should().Throw<DomainException>()
+            .WithMessage("Only the signing professional can cancel or correct a progress note.");
+        correct.Should().Throw<DomainException>()
+            .WithMessage("Only the signing professional can cancel or correct a progress note.");
+        note.Status.Should().Be(ProgressNoteStatus.Active);
+        note.Body.Should().Be("Texto firmado");
+    }
+
+    [Fact]
     public void Sign_requires_body_and_professional()
     {
         var tenant = DomainFixtures.ClinicA();

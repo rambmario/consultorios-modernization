@@ -1,5 +1,4 @@
 using Consultorios.Domain.Common;
-using Consultorios.Domain.Patients;
 
 namespace Consultorios.Domain.Scheduling;
 
@@ -29,19 +28,11 @@ public sealed class Appointment : Entity, ITenantOwned
         IReadOnlyCollection<Appointment> existingForProfessional,
         TimeProvider time)
     {
-        Patient.EnsureTenant(tenantId);
+        Guard.AgainstEmptyTenant(tenantId);
         ArgumentNullException.ThrowIfNull(existingForProfessional);
         ArgumentNullException.ThrowIfNull(time);
-
-        if (patientId == Guid.Empty)
-        {
-            throw new DomainException("PatientId is required.");
-        }
-
-        if (professionalId == Guid.Empty)
-        {
-            throw new DomainException("ProfessionalId is required.");
-        }
+        Guard.AgainstEmpty(patientId, "PatientId");
+        Guard.AgainstEmpty(professionalId, "ProfessionalId");
 
         if (endsAt <= startsAt)
         {

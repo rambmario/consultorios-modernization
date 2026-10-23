@@ -1,5 +1,4 @@
 using Consultorios.Domain.Common;
-using Consultorios.Domain.Patients;
 
 namespace Consultorios.Domain.Clinical;
 
@@ -15,7 +14,7 @@ public sealed class Diagnosis : Entity, ITenantOwned
 
     public static Diagnosis Create(Guid tenantId, string name, string? details = null)
     {
-        Patient.EnsureTenant(tenantId);
+        Guard.AgainstEmptyTenant(tenantId);
 
         if (string.IsNullOrWhiteSpace(name))
         {

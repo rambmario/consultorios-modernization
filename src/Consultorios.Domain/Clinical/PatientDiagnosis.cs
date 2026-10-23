@@ -1,5 +1,4 @@
 using Consultorios.Domain.Common;
-using Consultorios.Domain.Patients;
 
 namespace Consultorios.Domain.Clinical;
 
@@ -28,12 +27,12 @@ public sealed class PatientDiagnosis : Entity, ITenantOwned
         TimeProvider time,
         DateTimeOffset? validFrom = null)
     {
-        Patient.EnsureTenant(tenantId);
+        Guard.AgainstEmptyTenant(tenantId);
         ArgumentNullException.ThrowIfNull(existingForPatient);
         ArgumentNullException.ThrowIfNull(time);
-        EnsureId(patientId, "PatientId");
-        EnsureId(diagnosisId, "DiagnosisId");
-        EnsureId(professionalId, "ProfessionalId");
+        Guard.AgainstEmpty(patientId, "PatientId");
+        Guard.AgainstEmpty(diagnosisId, "DiagnosisId");
+        Guard.AgainstEmpty(professionalId, "ProfessionalId");
 
         var now = time.GetUtcNow();
         var from = validFrom ?? now;
@@ -79,11 +78,4 @@ public sealed class PatientDiagnosis : Entity, ITenantOwned
         ValidTo = now;
     }
 
-    private static void EnsureId(Guid id, string name)
-    {
-        if (id == Guid.Empty)
-        {
-            throw new DomainException($"{name} is required.");
-        }
-    }
 }

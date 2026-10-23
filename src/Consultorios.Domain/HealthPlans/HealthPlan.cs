@@ -1,5 +1,4 @@
 using Consultorios.Domain.Common;
-using Consultorios.Domain.Patients;
 
 namespace Consultorios.Domain.HealthPlans;
 
@@ -14,7 +13,7 @@ public sealed class HealthPlan : Entity, ITenantOwned
 
     public static HealthPlan Create(Guid tenantId, string name)
     {
-        Patient.EnsureTenant(tenantId);
+        Guard.AgainstEmptyTenant(tenantId);
 
         if (string.IsNullOrWhiteSpace(name))
         {

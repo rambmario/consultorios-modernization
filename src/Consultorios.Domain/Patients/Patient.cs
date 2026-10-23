@@ -25,7 +25,7 @@ public sealed class Patient : Entity, ITenantOwned
         Address? address = null,
         DateTimeOffset? firstConsultationAt = null)
     {
-        EnsureTenant(tenantId);
+        Guard.AgainstEmptyTenant(tenantId);
 
         if (string.IsNullOrWhiteSpace(lastName))
         {
@@ -83,11 +83,4 @@ public sealed class Patient : Entity, ITenantOwned
         Address = address ?? Address;
     }
 
-    internal static void EnsureTenant(Guid tenantId)
-    {
-        if (tenantId == Guid.Empty)
-        {
-            throw new DomainException("TenantId is required.");
-        }
-    }
 }

@@ -1,5 +1,4 @@
 using Consultorios.Domain.Common;
-using Consultorios.Domain.Patients;
 
 namespace Consultorios.Domain.HealthPlans;
 
@@ -20,7 +19,7 @@ public sealed class PatientCoverage : Entity, ITenantOwned
         Guid healthPlanId,
         string affiliationNumber)
     {
-        Patient.EnsureTenant(tenantId);
+        Guard.AgainstEmptyTenant(tenantId);
 
         if (patientId == Guid.Empty)
         {
