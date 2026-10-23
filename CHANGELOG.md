@@ -17,6 +17,7 @@ and this project adheres to [Conventional Commits](https://www.conventionalcommi
 
 ### Added
 
+- Clinical domain (tenant, patient, coverage, anamnesis, signed progress notes, diagnosis history, appointments, append-only audit) with unit tests.
 - .NET 10 Clean Architecture solution (`Consultorios.sln`, `src/*`, `tests/*`) with CPM, `.editorconfig`, `global.json`.
 - ADR 0002: solution structure.
 - Migration proposal (`docs/legacy/migration-proposal.md`) and ADR 0001 (greenfield vertical slices).

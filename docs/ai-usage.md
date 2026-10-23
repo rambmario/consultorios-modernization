@@ -154,3 +154,23 @@ Solución .NET 10 Clean Architecture (proyectos, CPM, editorconfig, tests xUnit 
 ### Tiempo estimado ahorrado
 
 ~1–1.5 h de armado de solución.
+
+---
+
+## 2026-10-22 — Fase 1 / Paso 2
+
+### Pedido principal
+
+Dominio clínico + tests de evolución firmada no editable, sin solape de turnos, vigencia de diagnósticos y auditoría append-only.
+
+### Qué generó la IA
+
+- Entidades de dominio y suite de tests (32 de dominio).
+
+### Qué revisó o debe revisar el desarrollador
+
+- Transiciones de `ProgressNote` y `Appointment`, y la regla de un diagnóstico vigente.
+
+### Tiempo estimado ahorrado
+
+~2–3 h de modelado y tests de máquina de estados.

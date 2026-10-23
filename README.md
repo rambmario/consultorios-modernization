@@ -48,7 +48,7 @@ Proposed MVP: appointment agenda + patient file + clinical history with progress
 
 ## Status
 
-**Phase 1 / Step 1.** .NET 10 Clean Architecture solution is in place (`Consultorios.sln`). Domain, persistence, and UI come in the next steps.
+**Phase 1 / Step 2.** Domain model and unit tests are in place. Persistence (EF Core / PostgreSQL) is next.
 
 ---
 

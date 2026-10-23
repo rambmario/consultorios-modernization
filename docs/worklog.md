@@ -202,3 +202,29 @@ Crear la solución Clean Architecture (.NET 10) con proyectos, props compartidos
 ### Próximo paso
 
 Paso 2 — dominio clínico. Esperar OK.
+
+---
+
+## 2026-10-22 — Fase 1 / Paso 2: dominio
+
+**Hora (aprox.):** 20:58–21:20 (UTC-3, America/Buenos_Aires)
+
+### Objetivo
+
+Implementar el dominio clínico con las reglas pedidas y tests unitarios.
+
+### Qué se hizo
+
+- Entidades: `Tenant`, `Patient` + `Address`, `HealthPlan` + `PatientCoverage`, `Anamnesis` (6 secciones con nombre largo), `ProgressNote` (firma, anulación, corrección), `Diagnosis` + `PatientDiagnosis` (vigencia), `Appointment` (estados + sin solape), `ClinicalAccessAudit` (append-only).
+- Tests de dominio: 32 (más 2 smoke de solution). Suite total **34 passed, 0 failed, 0 skipped**.
+
+### Decisiones
+
+- Evolución se firma al crear; no hay mutador de `Body`. Corrección deja la original `Superseded` y crea una nueva firmada con `CorrectsNoteId`.
+- El solape de agenda solo considera turnos `Scheduled`/`Confirmed` del mismo profesional; intervalos adyacentes no solapan.
+- Un diagnóstico no puede estar vigente dos veces a la vez; se puede reabrir en una fila nueva después de `Close`.
+- Auditoría: solo factory `Record`, sin métodos de instancia públicos.
+
+### Próximo paso
+
+Paso 3 — persistencia EF Core + PostgreSQL. Esperar OK.
