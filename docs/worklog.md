@@ -464,3 +464,48 @@ Pipeline reproducible en push/PR, sin secretos reales, 0 skip.
 ### Próximo paso
 
 `/revisar-paso` y esperar OK. Paso 7 — README y capturas (solo datos ficticios).
+
+---
+
+## 2026-10-24 — Remote + CI verde
+
+**Hora (aprox.):** 12:41–12:43 (UTC-3, America/Buenos_Aires)
+
+### Objetivo
+
+Publicar `main` y comprobar el pipeline.
+
+### Qué se hizo
+
+- `git remote add origin https://github.com/rambmario/consultorios-modernization.git`
+- `git push -u origin main`
+- CI [run 40108168272](https://github.com/rambmario/consultorios-modernization/actions/runs/40108168272): Backend success, Frontend success.
+
+### Próximo paso
+
+Paso 7 — README y capturas.
+
+---
+
+## 2026-10-24 — Fase 1 / Paso 7: README + capturas
+
+**Hora (aprox.):** 12:43–12:50 (UTC-3, America/Buenos_Aires)
+
+### Objetivo
+
+README de portfolio en inglés y capturas solo con datos ficticios.
+
+### Qué se hizo
+
+- README: contexto, MVP, mermaid, decisiones, getting started, tabla de tests (34+3+14+20), badge CI.
+- `LICENSE` MIT.
+- Script Playwright `web/scripts/screenshots.ts` (lee `DEMO_PASSWORD_PROFESIONAL` del `.env`).
+- Capturas: `docs/images/login.png`, `patients.png`, `clinical-record.png` (`Paciente Demo 1`, anamnesis con nombres largos, fecha `24/10/2026 12:37`).
+
+### Decisiones
+
+- Mismo esquema que Pymen: script reproducible, sin passwords en el repo.
+
+### Próximo paso
+
+`/revisar-paso` y esperar OK. Fase 1 de foundation queda cerrada pendiente de ese OK.

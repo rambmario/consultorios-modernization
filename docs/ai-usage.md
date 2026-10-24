@@ -336,3 +336,24 @@ Seguir con el Paso 6 (CI) después de los ajustes del Paso 5.
 ### Tiempo estimado ahorrado
 
 ~45 min de armado de pipeline y Dependabot.
+
+---
+
+## 2026-10-24 — Remote, CI y Paso 7
+
+### Pedido principal
+
+Agregar el remote de GitHub, pushear `main`, verificar CI verde y seguir con README + capturas.
+
+### Qué generó la IA
+
+- Push a `rambmario/consultorios-modernization`; CI Backend + Frontend en verde.
+- README de portfolio, LICENSE MIT, script Playwright y 3 PNG de datos ficticios.
+
+### Qué revisó o debe revisar el desarrollador
+
+- Tono del README y que las capturas no muestren secretos.
+
+### Tiempo estimado ahorrado
+
+~1.5 h de README, script de capturas y armado del remote.

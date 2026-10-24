@@ -25,6 +25,7 @@ and this project adheres to [Conventional Commits](https://www.conventionalcommi
 
 ### Added
 
+- Recruiter-facing README (architecture, getting started, test table), MIT license, and fictitious Dev-stack screenshots (login, patients, clinical record).
 - GitHub Actions CI (backend + frontend, Testcontainers, Coverlet) and Dependabot for NuGet, npm, and Actions.
 - ADR 0007 (CI with GitHub Actions).
 - React + TypeScript (Vite) client in `web/`: login, patients, agenda, clinical record, and HC audit, with role-gated navigation.
