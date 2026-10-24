@@ -399,6 +399,8 @@ namespace Consultorios.Infrastructure.Persistence.Migrations
                 column: "Name",
                 unique: true);
 
+            // Occupies a slot: AppointmentStatus.Scheduled = 0, Confirmed = 1.
+            // Changing those enum values breaks this constraint; keep them pinned by test.
             migrationBuilder.Sql("CREATE EXTENSION IF NOT EXISTS btree_gist;");
             migrationBuilder.Sql(
                 """

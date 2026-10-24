@@ -27,6 +27,16 @@ public class AppointmentTests
             DomainFixtures.Time);
 
     [Fact]
+    public void Occupying_statuses_keep_exclusion_constraint_integers()
+    {
+        ((int)AppointmentStatus.Scheduled).Should().Be(0);
+        ((int)AppointmentStatus.Confirmed).Should().Be(1);
+        ((int)AppointmentStatus.Attended).Should().Be(2);
+        ((int)AppointmentStatus.Cancelled).Should().Be(3);
+        ((int)AppointmentStatus.NoShow).Should().Be(4);
+    }
+
+    [Fact]
     public void Schedule_starts_as_Scheduled()
     {
         var tenant = DomainFixtures.ClinicA();

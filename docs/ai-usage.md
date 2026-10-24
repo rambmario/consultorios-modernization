@@ -215,3 +215,23 @@ Paso 3 de persistencia + exclusion constraint PostgreSQL + integration test para
 ### Tiempo estimado ahorrado
 
 ~3–4 h de armado EF/Npgsql, migración y Testcontainers.
+
+---
+
+## 2026-10-24 — test AppointmentStatus
+
+### Pedido principal
+
+Commit `test` que fije los enteros de `AppointmentStatus` de la exclusion y advierta en enum y migración.
+
+### Qué generó la IA
+
+- Test de valores 0–4, comentarios en enum y `InitialCreate`.
+
+### Qué revisó o debe revisar el desarrollador
+
+- Que el test falle si alguien reordena el enum.
+
+### Tiempo estimado ahorrado
+
+~10 min.

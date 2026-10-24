@@ -291,3 +291,22 @@ Persistencia EF Core + PostgreSQL, filtro fail-closed, exclusion de turnos y tes
 ### Próximo paso
 
 `/revisar-paso` y esperar OK. Paso 4 — API + Identity/JWT.
+
+---
+
+## 2026-10-24 — test: enteros de AppointmentStatus
+
+**Hora (aprox.):** 11:05 (UTC-3, America/Buenos_Aires)
+
+### Objetivo
+
+Antes del Paso 4, fijar los valores numéricos que usa la exclusion constraint.
+
+### Qué se hizo
+
+- Test `Occupying_statuses_keep_exclusion_constraint_integers` (`Scheduled = 0`, `Confirmed = 1`).
+- Comentario en `AppointmentStatus` y en `InitialCreate` (cambiar esos valores rompe `EX_Appointments_ProfessionalOverlap`).
+
+### Próximo paso
+
+Paso 4 — API + Identity/JWT + auditoría.

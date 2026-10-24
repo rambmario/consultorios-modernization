@@ -23,6 +23,7 @@ and this project adheres to [Conventional Commits](https://www.conventionalcommi
 
 ### Added
 
+- Unit test pins `AppointmentStatus` integers used by the appointment exclusion constraint (`Scheduled = 0`, `Confirmed = 1`).
 - EF Core + PostgreSQL persistence: fail-closed tenant filter, Restrict FKs, `InitialCreate` plus GiST exclusion constraint on overlapping appointments (`btree_gist`).
 - docker-compose PostgreSQL 16, fictitious `ClinicaA`/`ClinicaB` seed, `/health` vs `/health/ready`.
 - Testcontainers isolation, owned-address round-trip, and parallel overlap tests (0 skipped).
