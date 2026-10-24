@@ -1,5 +1,7 @@
 # Consultorios Modernization
 
+[![CI](https://github.com/rambmario/consultorios-modernization/actions/workflows/ci.yml/badge.svg)](https://github.com/rambmario/consultorios-modernization/actions/workflows/ci.yml)
+
 Modernization of **Consultorios**, a legacy clinical-records system I designed and maintained at Ingesoft, into a multi-tenant web platform.
 
 This repository is **greenfield documentation and code only**. The original desktop system is treated as read-only analysis input and is never copied here.
@@ -22,7 +24,7 @@ Seeds and screenshots use obviously fictitious data only (e.g. `Paciente Demo 1`
 | Layer | Choice |
 | --- | --- |
 | API | .NET 10 Web API, Clean Architecture |
-| UI | React + TypeScript (Vite) |
+| UI | React + TypeScript (Vite), TanStack Query, MUI |
 | Persistence | PostgreSQL + EF Core |
 | Cloud | AWS (ECS Fargate or App Runner, RDS PostgreSQL, S3, SQS — to be decided later) |
 
@@ -40,6 +42,7 @@ Proposed MVP: appointment agenda + patient file + clinical history with progress
 ├── src/                      # Domain, Application, Infrastructure, Api
 ├── tests/                    # Domain, Application, Api.IntegrationTests
 ├── web/                      # React + TypeScript (Vite)
+├── .github/                  # CI and Dependabot
 ├── AGENTS.md
 ├── CHANGELOG.md
 └── docs/
@@ -49,7 +52,7 @@ Proposed MVP: appointment agenda + patient file + clinical history with progress
 
 ## Status
 
-**Phase 1 / Step 5.** React + TypeScript (Vite) client: login, patients, agenda, clinical record, and audit, gated by role.
+**Phase 1 / Step 6.** GitHub Actions CI (backend + frontend in parallel) and weekly Dependabot. The React client uses TanStack Query and MUI.
 
 ## Local PostgreSQL
 

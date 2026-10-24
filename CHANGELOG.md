@@ -25,6 +25,8 @@ and this project adheres to [Conventional Commits](https://www.conventionalcommi
 
 ### Added
 
+- GitHub Actions CI (backend + frontend, Testcontainers, Coverlet) and Dependabot for NuGet, npm, and Actions.
+- ADR 0007 (CI with GitHub Actions).
 - React + TypeScript (Vite) client in `web/`: login, patients, agenda, clinical record, and HC audit, with role-gated navigation.
 - Component tests for patient search/paging, file tabs by role, hidden HC for Recepción, and signing a progress note (20 Vitest tests).
 - ADR 0006 (React/Vite frontend, TanStack Query, MUI).

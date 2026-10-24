@@ -316,3 +316,23 @@ Antes del Paso 6: TanStack Query en todas las llamadas, MUI con tema propio, act
 ### Tiempo estimado ahorrado
 
 ~3 h de wiring Query/MUI y tests de componentes.
+
+---
+
+## 2026-10-24 — Fase 1 / Paso 6
+
+### Pedido principal
+
+Seguir con el Paso 6 (CI) después de los ajustes del Paso 5.
+
+### Qué generó la IA
+
+- Workflow GitHub Actions, Dependabot, ADR 0007, badge en README.
+
+### Qué revisó o debe revisar el desarrollador
+
+- Que el badge coincida con el remote cuando se publique el repo.
+
+### Tiempo estimado ahorrado
+
+~45 min de armado de pipeline y Dependabot.

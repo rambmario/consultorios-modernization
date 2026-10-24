@@ -427,3 +427,40 @@ Completar el Paso 5 con el stack de portfolio (Query + MUI), fechas es-AR, anamn
 ### Próximo paso
 
 Paso 6 — CI (GitHub Actions + Dependabot).
+
+---
+
+## 2026-10-24 — Fase 1 / Paso 6: CI
+
+**Hora (aprox.):** 12:15–12:25 (UTC-3, America/Buenos_Aires)
+
+### Objetivo
+
+Pipeline reproducible en push/PR, sin secretos reales, 0 skip.
+
+### Qué se hizo
+
+- `.github/workflows/ci.yml`: jobs paralelos Backend (restore/build Release/`dotnet test` + Coverlet + artifact) y Frontend (`npm ci`, lint si hay, Vitest, build).
+- JWT efímero y `DEMO_PASSWORD_*` de demo escritos en `.env` del job. Postgres lo levanta Testcontainers.
+- `.github/dependabot.yml`: NuGet, npm `/web`, GitHub Actions (semanal).
+- ADR 0007. Badge de CI en el README.
+
+**Conteo de tests (último conocido, no se re-ejecutó el backend en este paso):**
+
+| Suite | Passed | Failed | Skipped |
+|-------|-------:|-------:|--------:|
+| Backend (`dotnet test -c Release`, Paso 4) | 51 | 0 | 0 |
+| Frontend (`npm test`, Paso 5 ajustes) | 20 | 0 | 0 |
+
+### Decisiones
+
+- Mismo esquema que Pymen (ADR 0008 allá): dos jobs, credenciales efímeras, sin skip.
+- Dependabot agrupa React, MUI, TanStack y tooling.
+
+### Problemas
+
+- El repo todavía no tiene remote; el badge apunta a `rambmario/consultorios-modernization` para cuando se publique.
+
+### Próximo paso
+
+`/revisar-paso` y esperar OK. Paso 7 — README y capturas (solo datos ficticios).
