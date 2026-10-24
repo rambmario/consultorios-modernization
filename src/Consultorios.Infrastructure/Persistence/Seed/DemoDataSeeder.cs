@@ -25,7 +25,7 @@ public static class DemoDataSeeder
         // System process: no ambient tenant; use IgnoreQueryFilters for any tenant-owned reads.
         tenantContext.Clear();
 
-        if (await db.Tenants.IgnoreQueryFilters().AnyAsync(cancellationToken))
+        if (await db.Tenants.IgnoreQueryFilters().AnyAsync(t => t.Name == "ClinicaA", cancellationToken))
         {
             logger.LogInformation("Demo data already present; skipping seed.");
             return;
@@ -37,7 +37,7 @@ public static class DemoDataSeeder
         await db.SaveChangesAsync(cancellationToken);
 
         await SeedClinicAAsync(db, time, clinicA, cancellationToken);
-        await SeedClinicBAsync(db, clinicB, cancellationToken);
+        await SeedClinicBAsync(db, time, clinicB, cancellationToken);
 
         logger.LogInformation("Seeded demo tenants '{ClinicA}' and '{ClinicB}'.", clinicA.Name, clinicB.Name);
     }
@@ -97,13 +97,15 @@ public static class DemoDataSeeder
 
     private static async Task SeedClinicBAsync(
         ConsultoriosDbContext db,
+        TimeProvider time,
         Tenant clinicB,
         CancellationToken cancellationToken)
     {
         var patient = Patient.Create(clinicB.Id, "Demo", "Paciente Demo 2", "20000002");
         var plan = HealthPlan.Create(clinicB.Id, "OS Demo B");
         var coverage = PatientCoverage.Create(clinicB.Id, patient.Id, plan.Id, "AF-DEMO-0002");
-        db.AddRange(patient, plan, coverage);
+        var anamnesis = Anamnesis.CreateEmpty(clinicB.Id, patient.Id, time);
+        db.AddRange(patient, plan, coverage, anamnesis);
         await db.SaveChangesAsync(cancellationToken);
     }
 }

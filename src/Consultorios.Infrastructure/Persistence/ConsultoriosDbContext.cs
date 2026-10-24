@@ -6,11 +6,14 @@ using Consultorios.Domain.HealthPlans;
 using Consultorios.Domain.Patients;
 using Consultorios.Domain.Scheduling;
 using Consultorios.Domain.Tenancy;
+using Consultorios.Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Consultorios.Infrastructure.Persistence;
 
-public sealed class ConsultoriosDbContext : DbContext, IConsultoriosDbContext
+public sealed class ConsultoriosDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>, IConsultoriosDbContext
 {
     private readonly ITenantContext _tenantContext;
 
@@ -33,7 +36,19 @@ public sealed class ConsultoriosDbContext : DbContext, IConsultoriosDbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ConsultoriosDbContext).Assembly);
+
+        modelBuilder.Entity<ApplicationUser>(builder =>
+        {
+            builder.Property(x => x.TenantId).IsRequired();
+            builder.HasIndex(x => x.TenantId);
+            builder.HasOne<Tenant>()
+                .WithMany()
+                .HasForeignKey(x => x.TenantId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
         ApplyFailClosedTenantFilters(modelBuilder);
     }
 

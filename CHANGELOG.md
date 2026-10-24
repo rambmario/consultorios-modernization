@@ -23,6 +23,9 @@ and this project adheres to [Conventional Commits](https://www.conventionalcommi
 
 ### Added
 
+- Web API with Identity + JWT (`tenant_id` claim), roles Admin / Profesional / Recepción, rate-limited login, and fail-closed 404 across tenants.
+- Clinical-record audit on HC views and clinical writes; Recepción cannot read the HC.
+- ADR 0005 (auth, roles, audit).
 - Unit test pins `AppointmentStatus` integers used by the appointment exclusion constraint (`Scheduled = 0`, `Confirmed = 1`).
 - EF Core + PostgreSQL persistence: fail-closed tenant filter, Restrict FKs, `InitialCreate` plus GiST exclusion constraint on overlapping appointments (`btree_gist`).
 - docker-compose PostgreSQL 16, fictitious `ClinicaA`/`ClinicaB` seed, `/health` vs `/health/ready`.

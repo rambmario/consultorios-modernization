@@ -235,3 +235,24 @@ Commit `test` que fije los enteros de `AppointmentStatus` de la exclusion y advi
 ### Tiempo estimado ahorrado
 
 ~10 min.
+
+---
+
+## 2026-10-24 — Fase 1 / Paso 4
+
+### Pedido principal
+
+Después del commit `test` de `AppointmentStatus`, implementar Paso 4: API + Identity/JWT + auditoría.
+
+### Qué generó la IA
+
+- Identity/JWT, servicios, endpoints, seed de usuarios, tests de flujo/roles/auditoría, ADR 0005.
+
+### Qué revisó o debe revisar el desarrollador
+
+- Matriz de roles (Recepción/Admin sin HC) y que el audit de vista quede persistido.
+- Secretos solo en `.env` / `.env.example`.
+
+### Tiempo estimado ahorrado
+
+~4–6 h de armado de auth, endpoints y tests.

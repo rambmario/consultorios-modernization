@@ -310,3 +310,35 @@ Antes del Paso 4, fijar los valores numéricos que usa la exclusion constraint.
 ### Próximo paso
 
 Paso 4 — API + Identity/JWT + auditoría.
+
+---
+
+## 2026-10-24 — Fase 1 / Paso 4: API + Identity/JWT + auditoría
+
+**Hora (aprox.):** 11:10–12:10 (UTC-3, America/Buenos_Aires)
+
+### Objetivo
+
+Exponer el MVP clínico por HTTP con login, roles y auditoría de HC.
+
+### Qué se hizo
+
+- Identity (`ApplicationUser` Guid + `TenantId`) + JWT + middleware de tenant/usuario.
+- Endpoints: auth, pacientes, agenda, catálogos, HC / anamnesis / evoluciones / diagnósticos, auditoría.
+- Seed de usuarios `*@demo.local` (contraseñas solo en `.env`).
+- Tests: login, recepción vs HC (403), vista auditada, firmante, cross-tenant 404, admin sin HC, JWT corto, probe 401, 429.
+- ADR 0005.
+
+### Decisiones
+
+- Recepción no lee HC. Admin tampoco. Profesional del tenant puede abrir HC; solo el firmante anula/corrige.
+- Cross-tenant → 404. Exclusion de turnos → 409. `DomainException` → 422.
+- `ApplicationUser` no implementa `ITenantOwned` (login sin tenant ambient).
+
+### Problemas
+
+- `FrameworkReference` Microsoft.AspNetCore.App hizo redundantes paquetes de Extensions (NU1510). Se quitaron.
+
+### Próximo paso
+
+`/revisar-paso` y esperar OK. Paso 5 — React/Vite.

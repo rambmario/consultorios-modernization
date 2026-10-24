@@ -1,3 +1,4 @@
+using Consultorios.Api.IntegrationTests.Infrastructure;
 using Consultorios.Infrastructure.Persistence;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
@@ -13,11 +14,13 @@ public class SolutionSmokeTests : IClassFixture<WebApplicationFactory<Program>>
     {
         DotEnv.LoadFromAncestorDirectory(AppContext.BaseDirectory);
         DotEnv.LoadFromAncestorDirectory(Directory.GetCurrentDirectory());
+        TestAuth.ApplyEnvironment();
 
         _factory = factory.WithWebHostBuilder(builder =>
         {
             builder.UseSetting("DisableHttpsRedirection", "true");
             builder.UseSetting("SkipSeed", "true");
+            builder.UseSetting("Jwt:SigningKey", TestAuth.JwtSigningKey);
             builder.UseSetting(
                 "ConnectionStrings:Consultorios",
                 "Host=127.0.0.1;Port=1;Database=consultorios_smoke;Username=consultorios;Password=smoke");

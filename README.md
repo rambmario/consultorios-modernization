@@ -48,15 +48,16 @@ Proposed MVP: appointment agenda + patient file + clinical history with progress
 
 ## Status
 
-**Phase 1 / Step 3.** EF Core + PostgreSQL persistence, fail-closed tenant filter, and a GiST exclusion constraint on overlapping appointments.
+**Phase 1 / Step 4.** API with Identity + JWT, role matrix (Admin / Profesional / Recepción), and clinical-record audit.
 
 ## Local PostgreSQL
 
 1. Copy `.env.example` to `.env` and set `POSTGRES_PASSWORD`.
 2. `docker compose up -d postgres`
-3. Run the API in Development: it migrates and seeds fictitious `ClinicaA` / `ClinicaB` data.
+3. Set `JWT_SIGNING_KEY` (≥32 chars) and `DEMO_PASSWORD_*` in `.env`.
+4. Run the API in Development: it migrates and seeds fictitious `ClinicaA` / `ClinicaB` data and `*@demo.local` users.
 
-Liveness: `GET /health`. Readiness (database): `GET /health/ready`.
+Liveness: `GET /health`. Readiness (database): `GET /health/ready`. Login: `POST /api/auth/login`. Scalar: `/scalar` in Development.
 
 Integration tests use Testcontainers (Docker required; no skipped tests).
 
