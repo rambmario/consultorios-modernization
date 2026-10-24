@@ -1,0 +1,191 @@
+:root {
+  --ink: #1d2a24;
+  --paper: #f4efe6;
+  --card: #fffdf8;
+  --line: #c9bba8;
+  --accent: #1f5c4d;
+  --accent-ink: #f4efe6;
+  --danger: #8c2f2f;
+  --muted: #5c6b64;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+a {
+  color: var(--accent);
+}
+
+.app-shell main,
+.login-screen {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--line);
+  background: #e7dfd2;
+}
+
+.topbar nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.brand {
+  margin: 0;
+  font-size: 1.25rem;
+  letter-spacing: 0.04em;
+}
+
+.muted,
+.eyebrow {
+  color: var(--muted);
+  margin-top: 0.25rem;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.8rem;
+}
+
+.card,
+table {
+  background: var(--card);
+  border: 1px solid var(--line);
+}
+
+.card {
+  padding: 1rem 1.25rem;
+  margin: 1.25rem 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--line);
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 0.6rem 0;
+}
+
+input,
+select,
+textarea,
+button,
+nav a {
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+input,
+select,
+textarea,
+button {
+  font-size: 1rem;
+}
+
+input,
+select,
+textarea {
+  padding: 0.45rem 0.55rem;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
+button,
+.button-link {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border: 0;
+  padding: 0.55rem 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+button.ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+.toolbar {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.toolbar input {
+  flex: 1;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.facts dt {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.facts dd {
+  margin: 0.2rem 0 0;
+}
+
+.error {
+  color: var(--danger);
+}
+
+.login-screen {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.login-card {
+  width: min(420px, 100%);
+}
+
+.demo-list {
+  padding-left: 1.1rem;
+  color: var(--muted);
+}
+
+blockquote {
+  margin: 0 0 1rem;
+  padding-left: 0.8rem;
+  border-left: 3px solid var(--accent);
+}

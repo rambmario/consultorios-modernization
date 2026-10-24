@@ -23,6 +23,8 @@ and this project adheres to [Conventional Commits](https://www.conventionalcommi
 
 ### Added
 
+- React + TypeScript (Vite) client in `web/`: login, patients, agenda, clinical record, and HC audit, with role-gated navigation.
+- ADR 0006 (React/Vite frontend).
 - Web API with Identity + JWT (`tenant_id` claim), roles Admin / Profesional / Recepción, rate-limited login, and fail-closed 404 across tenants.
 - Clinical-record audit on HC views and clinical writes; Recepción cannot read the HC.
 - ADR 0005 (auth, roles, audit).

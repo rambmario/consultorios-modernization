@@ -24,3 +24,4 @@ Documentación en **español**.
 | [0003](0003-aislamiento-tenants-fail-closed.md) | Aislamiento de tenants fail-closed | Aceptado |
 | [0004](0004-persistencia-ef-core-postgresql.md) | Persistencia EF Core + PostgreSQL y exclusion de turnos | Aceptado |
 | [0005](0005-auth-identity-jwt-roles.md) | Identity + JWT, roles y auditoría de HC | Aceptado |
+| [0006](0006-frontend-react-vite.md) | Frontend React + TypeScript (Vite) | Aceptado |

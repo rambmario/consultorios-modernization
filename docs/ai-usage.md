@@ -276,3 +276,23 @@ Agregar en el worklog del Paso 4 el conteo exacto de tests por proyecto.
 ### Tiempo estimado ahorrado
 
 ~5 min.
+
+---
+
+## 2026-10-24 — Fase 1 / Paso 5
+
+### Pedido principal
+
+Después de anotar el conteo de tests del Paso 4, implementar el frontend React (Vite).
+
+### Qué generó la IA
+
+- App en `web/` (auth, pacientes, agenda, HC, auditoría), tests Vitest, ADR 0006.
+
+### Qué revisó o debe revisar el desarrollador
+
+- Que Recepción no vea HC y que el proxy apunte a la API local.
+
+### Tiempo estimado ahorrado
+
+~3–4 h de armado de SPA y tests.

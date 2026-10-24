@@ -351,3 +351,30 @@ Exponer el MVP clínico por HTTP con login, roles y auditoría de HC.
 ### Próximo paso
 
 `/revisar-paso` y esperar OK. Paso 5 — React/Vite.
+
+---
+
+## 2026-10-24 — Fase 1 / Paso 5: frontend React
+
+**Hora (aprox.):** 11:25–12:10 (UTC-3, America/Buenos_Aires)
+
+### Objetivo
+
+SPA React/Vite contra la API del Paso 4, con matriz de roles y tests.
+
+### Qué se hizo
+
+- `web/`: Vite, React 19, TypeScript, React Router.
+- Login (`sessionStorage` + Bearer), ficha, agenda, HC (solo Profesional), auditoría.
+- Tests Vitest: roles, sesión, header JWT, validación de login. **6 passed, 0 failed, 0 skipped.**
+- ADR 0006.
+- El worklog del Paso 4 ya tenía el conteo 51/0/0 (commit `docs` previo).
+
+### Decisiones
+
+- Modelos TS a mano. Proxy `/api` → `localhost:5088`. JWT en `sessionStorage`, no `localStorage`.
+- UI en español; sin UI kit.
+
+### Próximo paso
+
+`/revisar-paso` y esperar OK. Paso 6 — CI.

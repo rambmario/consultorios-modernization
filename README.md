@@ -39,6 +39,7 @@ Proposed MVP: appointment agenda + patient file + clinical history with progress
 ├── Consultorios.sln
 ├── src/                      # Domain, Application, Infrastructure, Api
 ├── tests/                    # Domain, Application, Api.IntegrationTests
+├── web/                      # React + TypeScript (Vite)
 ├── AGENTS.md
 ├── CHANGELOG.md
 └── docs/
@@ -48,7 +49,7 @@ Proposed MVP: appointment agenda + patient file + clinical history with progress
 
 ## Status
 
-**Phase 1 / Step 4.** API with Identity + JWT, role matrix (Admin / Profesional / Recepción), and clinical-record audit.
+**Phase 1 / Step 5.** React + TypeScript (Vite) client: login, patients, agenda, clinical record, and audit, gated by role.
 
 ## Local PostgreSQL
 
@@ -60,6 +61,16 @@ Proposed MVP: appointment agenda + patient file + clinical history with progress
 Liveness: `GET /health`. Readiness (database): `GET /health/ready`. Login: `POST /api/auth/login`. Scalar: `/scalar` in Development.
 
 Integration tests use Testcontainers (Docker required; no skipped tests).
+
+## Web client
+
+```bash
+cd web
+npm install
+npm run dev
+```
+
+The Vite dev server proxies `/api` to `http://localhost:5088`. UI copy is Spanish.
 
 ---
 
