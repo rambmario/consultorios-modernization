@@ -1,72 +1,59 @@
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { api, ApiError } from "../api/client";
-import type { PatientResponse } from "../api/models";
+import { Alert, CircularProgress, Box } from "@mui/material";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { ApiError } from "../api/client";
+import { useClinicalRecordQuery, usePatientQuery, useSignProgressNote } from "../api/hooks";
 import { useAuth } from "../auth/AuthContext";
 import { canAccessClinicalRecord } from "../auth/roles";
+import { PatientFile } from "../patients/PatientFile";
 
 export function PatientDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { session } = useAuth();
-  const [patient, setPatient] = useState<PatientResponse | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const showClinical = canAccessClinicalRecord(session?.roles ?? []);
+  const roles = session?.roles ?? [];
+  const showClinical = canAccessClinicalRecord(roles);
+  const [clinicalOpen, setClinicalOpen] = useState(false);
+  const patient = usePatientQuery(id);
+  const record = useClinicalRecordQuery(id, showClinical && clinicalOpen);
+  const sign = useSignProgressNote(id);
 
-  useEffect(() => {
-    if (!id) {
-      return;
-    }
-    api<PatientResponse>(`/api/patients/${id}`)
-      .then(setPatient)
-      .catch((err) => setError(err instanceof ApiError ? err.message : "No se encontró la ficha."));
-  }, [id]);
+  if (patient.isLoading) {
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", py: 4 }} role="status">
+        <CircularProgress aria-label="Cargando ficha" />
+      </Box>
+    );
+  }
 
-  if (error) {
-    return <p className="error">{error}</p>;
+  if (patient.error || !patient.data) {
+    const message =
+      patient.error instanceof ApiError ? patient.error.message : "No se encontró la ficha.";
+    return <Alert severity="error">{message}</Alert>;
   }
-  if (!patient) {
-    return <p>Cargando ficha…</p>;
-  }
+
+  const recordError =
+    record.error instanceof ApiError
+      ? record.error.message
+      : record.error
+        ? "No se pudo abrir la HC."
+        : sign.error instanceof ApiError
+          ? sign.error.message
+          : sign.error
+            ? "No se pudo firmar la evolución."
+            : null;
 
   return (
-    <section>
-      <p>
-        <Link to="/patients">← Pacientes</Link>
-      </p>
-      <h1>
-        {patient.lastName}, {patient.firstName}
-      </h1>
-      <dl className="facts">
-        <div>
-          <dt>Documento</dt>
-          <dd>{patient.nationalId}</dd>
-        </div>
-        <div>
-          <dt>Teléfono</dt>
-          <dd>{patient.phone ?? "—"}</dd>
-        </div>
-        <div>
-          <dt>Obra social</dt>
-          <dd>
-            {patient.coverage
-              ? `${patient.coverage.healthPlanName} · ${patient.coverage.affiliationNumber}`
-              : "—"}
-          </dd>
-        </div>
-        <div>
-          <dt>Dirección</dt>
-          <dd>
-            {[patient.address.street, patient.address.number, patient.address.city].filter(Boolean).join(" ") || "—"}
-          </dd>
-        </div>
-      </dl>
-      {showClinical ? (
-        <Link className="button-link" to={`/patients/${patient.id}/clinical-record`}>
-          Abrir historia clínica
-        </Link>
-      ) : (
-        <p className="muted">La historia clínica solo la abre un profesional (queda auditada).</p>
-      )}
-    </section>
+    <PatientFile
+      patient={patient.data}
+      roles={roles}
+      clinicalRecord={record.data ?? null}
+      isLoadingRecord={record.isLoading}
+      recordError={recordError}
+      isSigning={sign.isPending}
+      onOpenClinicalTab={() => setClinicalOpen(true)}
+      onSignNote={async (body) => {
+        await sign.mutateAsync(body);
+      }}
+    />
   );
 }

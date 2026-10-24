@@ -377,4 +377,53 @@ SPA React/Vite contra la API del Paso 4, con matriz de roles y tests.
 
 ### Próximo paso
 
-`/revisar-paso` y esperar OK. Paso 6 — CI.
+Ajustes del Paso 5 (Query, MUI, fechas, tests) y luego CI.
+
+---
+
+## 2026-10-24 — Fase 1 / Paso 5 (ajustes): TanStack Query + MUI + tests
+
+**Hora (aprox.):** 11:56–12:15 (UTC-3, America/Buenos_Aires)
+
+### Objetivo
+
+Completar el Paso 5 con el stack de portfolio (Query + MUI), fechas es-AR, anamnesis con nombres largos y ≥15 tests de front, con conteo exacto.
+
+### Qué se hizo
+
+- `@tanstack/react-query` para login, pacientes, ficha, HC, evoluciones, agenda y auditoría; invalidación al guardar.
+- MUI + tema propio (`consultoriosTheme`): AppBar, tabs, tablas, formularios, alertas.
+- Fechas `dd/MM/yyyy HH:mm` (`es-AR`, America/Argentina/Buenos_Aires).
+- Anamnesis: nombres largos visibles (no siglas).
+- Ficha con pestañas según rol; HC oculta para Recepción y Admin.
+- ADR 0006 actualizado (Query y MUI como estándar de mercado / portfolio).
+
+**Conteo exacto de tests de front (`npm test` en `/web`):**
+
+| Archivo | Passed | Failed | Skipped |
+|---------|-------:|-------:|--------:|
+| `auth/roles.test.ts` | 3 | 0 | 0 |
+| `auth/session.test.ts` | 1 | 0 | 0 |
+| `api/client.test.ts` | 1 | 0 | 0 |
+| `api/hooks.test.tsx` | 2 | 0 | 0 |
+| `pages/LoginPage.test.tsx` | 1 | 0 | 0 |
+| `i18n/dates.test.ts` | 2 | 0 | 0 |
+| `clinical/anamnesisSections.test.ts` | 1 | 0 | 0 |
+| `clinical/ClinicalRecordPanel.test.tsx` | 3 | 0 | 0 |
+| `patients/PatientList.test.tsx` | 3 | 0 | 0 |
+| `patients/PatientFile.test.tsx` | 3 | 0 | 0 |
+| **Total** | **20** | **0** | **0** |
+
+### Decisiones
+
+- Query y MUI no son opcionales: son el stack que el portfolio debe mostrar.
+- La HC se pide recién al abrir la pestaña (la vista queda auditada).
+
+### Problemas
+
+- MUI 7: `InputLabelProps` pasó a `slotProps.inputLabel`; `Stack` no acepta `flexWrap` suelto.
+- Testing Library: el label de TextField required incluye asterisco; el texto de “Examen físico” chocaba con el valor de demo.
+
+### Próximo paso
+
+Paso 6 — CI (GitHub Actions + Dependabot).

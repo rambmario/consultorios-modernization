@@ -296,3 +296,23 @@ Después de anotar el conteo de tests del Paso 4, implementar el frontend React 
 ### Tiempo estimado ahorrado
 
 ~3–4 h de armado de SPA y tests.
+
+---
+
+## 2026-10-24 — Fase 1 / Paso 5 (ajustes Query + MUI)
+
+### Pedido principal
+
+Antes del Paso 6: TanStack Query en todas las llamadas, MUI con tema propio, actualizar ADR 0006, fechas es-AR, nombres largos de anamnesis, tests de componentes (≥15) y conteo exacto en el worklog.
+
+### Qué generó la IA
+
+- Hooks de Query, tema MUI, páginas refactorizadas, `formatDateTime`, paneles testeables, 20 tests Vitest, ADR 0006.
+
+### Qué revisó o debe revisar el desarrollador
+
+- Que Recepción no vea la pestaña de HC y que firmar invalide la cache.
+
+### Tiempo estimado ahorrado
+
+~3 h de wiring Query/MUI y tests de componentes.

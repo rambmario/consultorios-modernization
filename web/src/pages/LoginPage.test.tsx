@@ -1,7 +1,6 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MemoryRouter } from "react-router-dom";
-import { AuthProvider } from "../auth/AuthContext";
+import { renderWithProviders } from "../test/render";
 import { LoginPage } from "./LoginPage";
 
 describe("LoginPage", () => {
@@ -10,13 +9,7 @@ describe("LoginPage", () => {
     const fetchMock = vi.fn();
     vi.stubGlobal("fetch", fetchMock);
 
-    render(
-      <MemoryRouter>
-        <AuthProvider>
-          <LoginPage />
-        </AuthProvider>
-      </MemoryRouter>
-    );
+    renderWithProviders(<LoginPage />);
 
     await user.clear(screen.getByLabelText("Contraseña"));
     await user.type(screen.getByLabelText("Contraseña"), "short");

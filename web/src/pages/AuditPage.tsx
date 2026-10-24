@@ -1,45 +1,67 @@
-import { useEffect, useState } from "react";
-import { api, ApiError } from "../api/client";
-import type { ClinicalAuditResponse } from "../api/models";
+import {
+  Alert,
+  Box,
+  CircularProgress,
+  Paper,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography
+} from "@mui/material";
+import { ApiError } from "../api/client";
+import { useAuditsQuery } from "../api/hooks";
 import { auditActionLabels, labelOf } from "../api/models";
+import { formatDateTime } from "../i18n/dates";
 
 export function AuditPage() {
-  const [rows, setRows] = useState<ClinicalAuditResponse[]>([]);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    api<ClinicalAuditResponse[]>("/api/clinical-audits")
-      .then(setRows)
-      .catch((err) => setError(err instanceof ApiError ? err.message : "No se pudo cargar la auditoría."));
-  }, []);
+  const audits = useAuditsQuery();
+  const error =
+    audits.error instanceof ApiError
+      ? audits.error.message
+      : audits.error
+        ? "No se pudo cargar la auditoría."
+        : null;
 
   return (
-    <section>
-      <h1>Auditoría de historia clínica</h1>
-      <p className="muted">Quién vio o modificó qué, y cuándo. Datos de demostración ficticios.</p>
-      {error ? <p className="error">{error}</p> : null}
-      <table>
-        <thead>
-          <tr>
-            <th>Cuándo</th>
-            <th>Acción</th>
-            <th>Recurso</th>
-            <th>Actor</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row) => (
-            <tr key={row.id}>
-              <td>{new Date(row.occurredAt).toLocaleString()}</td>
-              <td>{labelOf(auditActionLabels, row.action)}</td>
-              <td>
-                {row.resourceType} · {row.resourceId.slice(0, 8)}
-              </td>
-              <td>{row.actorUserId.slice(0, 8)}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </section>
+    <Stack spacing={2} component="section">
+      <Typography variant="h1">Auditoría de historia clínica</Typography>
+      <Typography color="text.secondary">
+        Quién vio o modificó qué, y cuándo. Datos de demostración ficticios.
+      </Typography>
+      {error ? <Alert severity="error">{error}</Alert> : null}
+      {audits.isLoading ? (
+        <Box sx={{ display: "flex", justifyContent: "center", py: 4 }} role="status">
+          <CircularProgress aria-label="Cargando auditoría" />
+        </Box>
+      ) : (
+        <Paper>
+          <Table aria-label="Auditoría de historia clínica">
+            <TableHead>
+              <TableRow>
+                <TableCell>Cuándo</TableCell>
+                <TableCell>Acción</TableCell>
+                <TableCell>Recurso</TableCell>
+                <TableCell>Actor</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {(audits.data ?? []).map((row) => (
+                <TableRow key={row.id}>
+                  <TableCell>{formatDateTime(row.occurredAt)}</TableCell>
+                  <TableCell>{labelOf(auditActionLabels, row.action)}</TableCell>
+                  <TableCell>
+                    {row.resourceType} · {row.resourceId.slice(0, 8)}
+                  </TableCell>
+                  <TableCell>{row.actorUserId.slice(0, 8)}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Paper>
+      )}
+    </Stack>
   );
 }

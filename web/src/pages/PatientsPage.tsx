@@ -1,104 +1,110 @@
-import { FormEvent, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { api, ApiError } from "../api/client";
-import type { CreatePatientRequest, PagedResult, PatientResponse } from "../api/models";
+import { Alert, Box, Button, Paper, Stack, TextField, Typography } from "@mui/material";
+import { FormEvent, useState } from "react";
+import { ApiError } from "../api/client";
+import { useCreatePatient, usePatientsQuery } from "../api/hooks";
+import type { CreatePatientRequest } from "../api/models";
+import { PatientList } from "../patients/PatientList";
 
 export function PatientsPage() {
-  const [patients, setPatients] = useState<PatientResponse[]>([]);
+  const [searchInput, setSearchInput] = useState("");
   const [search, setSearch] = useState("");
-  const [error, setError] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const patients = usePatientsQuery(search, page, pageSize);
+  const create = useCreatePatient();
   const [form, setForm] = useState<CreatePatientRequest>({
     lastName: "",
     firstName: "",
     nationalId: ""
   });
 
-  async function load(term = search) {
-    const query = term ? `?search=${encodeURIComponent(term)}` : "";
-    const page = await api<PagedResult<PatientResponse>>(`/api/patients${query}`);
-    setPatients(page.items);
+  function applySearch() {
+    setPage(1);
+    setSearch(searchInput);
   }
-
-  useEffect(() => {
-    load().catch((err) => setError(err instanceof ApiError ? err.message : "No se pudieron cargar pacientes."));
-  }, []);
 
   async function onCreate(event: FormEvent) {
     event.preventDefault();
-    setError(null);
     try {
-      await api<PatientResponse>("/api/patients", {
-        method: "POST",
-        body: JSON.stringify(form)
-      });
+      await create.mutateAsync(form);
       setForm({ lastName: "", firstName: "", nationalId: "" });
-      await load();
-    } catch (err) {
-      setError(err instanceof ApiError ? err.message : "No se pudo crear el paciente.");
+    } catch {
+      // Error surfaces via create.error
     }
   }
 
+  const queryError =
+    patients.error instanceof ApiError
+      ? patients.error.message
+      : patients.error
+        ? "No se pudieron cargar pacientes."
+        : null;
+  const createError =
+    create.error instanceof ApiError
+      ? create.error.message
+      : create.error
+        ? "No se pudo crear el paciente."
+        : null;
+
   return (
-    <section>
-      <h1>Pacientes</h1>
-      <form
-        className="toolbar"
-        onSubmit={(event) => {
-          event.preventDefault();
-          load().catch((err) => setError(err instanceof Error ? err.message : "Error"));
+    <Stack spacing={3}>
+      <PatientList
+        items={patients.data?.items ?? []}
+        search={searchInput}
+        onSearchChange={setSearchInput}
+        onSearch={applySearch}
+        page={page}
+        pageSize={pageSize}
+        totalCount={patients.data?.totalCount ?? 0}
+        onPageChange={setPage}
+        onPageSizeChange={(next) => {
+          setPageSize(next);
+          setPage(1);
         }}
-      >
-        <input
-          placeholder="Buscar por apellido, nombre o documento"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-        <button type="submit">Buscar</button>
-      </form>
+        isLoading={patients.isLoading}
+        error={queryError}
+      />
 
-      {error ? <p className="error">{error}</p> : null}
-
-      <table>
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Documento</th>
-            <th>Obra social</th>
-          </tr>
-        </thead>
-        <tbody>
-          {patients.map((patient) => (
-            <tr key={patient.id}>
-              <td>
-                <Link to={`/patients/${patient.id}`}>
-                  {patient.lastName}, {patient.firstName}
-                </Link>
-              </td>
-              <td>{patient.nationalId}</td>
-              <td>{patient.coverage?.healthPlanName ?? "—"}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <form className="card" onSubmit={onCreate}>
-        <h2>Alta ficticia</h2>
-        <div className="grid">
-          <label>
-            Apellido
-            <input value={form.lastName} onChange={(e) => setForm({ ...form, lastName: e.target.value })} required />
-          </label>
-          <label>
-            Nombre
-            <input value={form.firstName} onChange={(e) => setForm({ ...form, firstName: e.target.value })} required />
-          </label>
-          <label>
-            Documento
-            <input value={form.nationalId} onChange={(e) => setForm({ ...form, nationalId: e.target.value })} required />
-          </label>
-        </div>
-        <button type="submit">Guardar paciente</button>
-      </form>
-    </section>
+      <Paper component="form" onSubmit={onCreate} sx={{ p: 2 }}>
+        <Typography variant="h2" gutterBottom>
+          Alta ficticia
+        </Typography>
+        {createError ? (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {createError}
+          </Alert>
+        ) : null}
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+            gap: 1.5,
+            mb: 2
+          }}
+        >
+          <TextField
+            label="Apellido"
+            value={form.lastName}
+            onChange={(event) => setForm({ ...form, lastName: event.target.value })}
+            required
+          />
+          <TextField
+            label="Nombre"
+            value={form.firstName}
+            onChange={(event) => setForm({ ...form, firstName: event.target.value })}
+            required
+          />
+          <TextField
+            label="Documento"
+            value={form.nationalId}
+            onChange={(event) => setForm({ ...form, nationalId: event.target.value })}
+            required
+          />
+        </Box>
+        <Button type="submit" disabled={create.isPending}>
+          {create.isPending ? "Guardando…" : "Guardar paciente"}
+        </Button>
+      </Paper>
+    </Stack>
   );
 }

@@ -14,6 +14,8 @@ and this project adheres to [Conventional Commits](https://www.conventionalcommi
 
 ### Changed
 
+- Frontend uses TanStack Query for every API call (cache, loading/error, invalidate on save) and MUI with a custom theme; dates render as `dd/MM/yyyy HH:mm` (es-AR); anamnesis sections show long Spanish names.
+- ADR 0006 now includes TanStack Query and MUI as market-standard portfolio stack.
 - Tenant and required-id checks live in `Domain/Common/Guard` (used by all tenant-owned entities).
 - Roadmap: Cloud AWS is now Phase 2 (public demo) before studies/attachments, prescriptions, and reports.
 - Owner decisions for Phase 0 recorded; open questions from the analysis closed (2026-10-22).
@@ -24,7 +26,8 @@ and this project adheres to [Conventional Commits](https://www.conventionalcommi
 ### Added
 
 - React + TypeScript (Vite) client in `web/`: login, patients, agenda, clinical record, and HC audit, with role-gated navigation.
-- ADR 0006 (React/Vite frontend).
+- Component tests for patient search/paging, file tabs by role, hidden HC for Recepción, and signing a progress note (20 Vitest tests).
+- ADR 0006 (React/Vite frontend, TanStack Query, MUI).
 - Web API with Identity + JWT (`tenant_id` claim), roles Admin / Profesional / Recepción, rate-limited login, and fail-closed 404 across tenants.
 - Clinical-record audit on HC views and clinical writes; Recepción cannot read the HC.
 - ADR 0005 (auth, roles, audit).
