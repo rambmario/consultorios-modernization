@@ -329,6 +329,15 @@ Exponer el MVP clínico por HTTP con login, roles y auditoría de HC.
 - Tests: login, recepción vs HC (403), vista auditada, firmante, cross-tenant 404, admin sin HC, JWT corto, probe 401, 429.
 - ADR 0005.
 
+**Conteo exacto de tests (Paso 4, `dotnet test -c Release`):**
+
+| Proyecto | Passed | Failed | Skipped |
+|----------|-------:|-------:|--------:|
+| `Consultorios.Domain.Tests` | 34 | 0 | 0 |
+| `Consultorios.Application.Tests` | 3 | 0 | 0 |
+| `Consultorios.Api.IntegrationTests` | 14 | 0 | 0 |
+| **Total** | **51** | **0** | **0** |
+
 ### Decisiones
 
 - Recepción no lee HC. Admin tampoco. Profesional del tenant puede abrir HC; solo el firmante anula/corrige.

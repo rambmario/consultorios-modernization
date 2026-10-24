@@ -256,3 +256,23 @@ Después del commit `test` de `AppointmentStatus`, implementar Paso 4: API + Ide
 ### Tiempo estimado ahorrado
 
 ~4–6 h de armado de auth, endpoints y tests.
+
+---
+
+## 2026-10-24 — worklog Paso 4 (conteo)
+
+### Pedido principal
+
+Agregar en el worklog del Paso 4 el conteo exacto de tests por proyecto.
+
+### Qué generó la IA
+
+- Tabla passed/failed/skipped: Domain 34, Application 3, Api.IntegrationTests 14; total 51/0/0.
+
+### Qué revisó o debe revisar el desarrollador
+
+- Que coincida con la corrida `dotnet test -c Release` del Paso 4.
+
+### Tiempo estimado ahorrado
+
+~5 min.
